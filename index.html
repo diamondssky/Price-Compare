@@ -3,13 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>QuickSearch • Price Comparison Tool</title>
+    <title>PriceCompare • Find Best Prices Online</title>
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <!-- Material Icons -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+    <!-- Font Awesome for brand icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
             /* Default dark theme */
@@ -33,12 +35,12 @@
 
         .light-theme {
             --bg-primary: #ffffff;
-            --bg-secondary: #f1f5f9;
-            --bg-tertiary: #e2e8f0;
+            --bg-secondary: #f8fafc;
+            --bg-tertiary: #f1f5f9;
             --text-primary: #0f172a;
             --text-secondary: #475569;
             --text-tertiary: #64748b;
-            --border-color: #cbd5e1;
+            --border-color: #e2e8f0;
             --shadow-color: rgba(0, 0, 0, 0.1);
         }
 
@@ -58,7 +60,7 @@
         }
 
         .container {
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
             padding: 0 20px;
         }
@@ -66,57 +68,61 @@
         /* Header */
         header {
             padding: 24px 0;
-            border-bottom: 1px solid var(--border-color);
-            background-color: var(--bg-secondary);
-            position: sticky;
-            top: 0;
-            z-index: 100;
+            background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+            color: white;
+            margin-bottom: 32px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
         }
 
-        .header-top {
+        .header-content {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 16px;
         }
 
         .logo {
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 16px;
         }
 
         .logo-icon {
-            width: 40px;
-            height: 40px;
-            background-color: var(--accent-color);
+            width: 48px;
+            height: 48px;
+            background-color: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
             border-radius: var(--radius-md);
             display: flex;
             align-items: center;
             justify-content: center;
             color: white;
             font-size: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
         }
 
-        .logo h1 {
-            font-size: 24px;
+        .logo-text h1 {
+            font-size: 28px;
             font-weight: 700;
-            color: var(--text-primary);
+            margin-bottom: 4px;
+            background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
-        .theme-controls {
-            display: flex;
-            align-items: center;
-            gap: 12px;
+        .logo-text p {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.9);
+            font-weight: 400;
         }
 
         .theme-toggle {
-            width: 40px;
-            height: 40px;
+            width: 48px;
+            height: 48px;
             border-radius: var(--radius-md);
-            border: 1px solid var(--border-color);
-            background-color: var(--bg-tertiary);
-            color: var(--text-primary);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            background-color: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            color: white;
             cursor: pointer;
             display: flex;
             align-items: center;
@@ -126,17 +132,13 @@
 
         .theme-toggle:hover {
             transform: translateY(-2px);
-            border-color: var(--accent-color);
-        }
-
-        /* Main Content */
-        main {
-            padding: 32px 0;
+            background-color: rgba(255, 255, 255, 0.3);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
         }
 
         /* Search Section */
         .search-section {
-            margin-bottom: 32px;
+            margin-bottom: 40px;
         }
 
         .search-container {
@@ -146,24 +148,26 @@
 
         .search-input {
             width: 100%;
-            padding: 18px 52px 18px 20px;
-            font-size: 16px;
-            border: 2px solid var(--border-color);
+            padding: 20px 60px 20px 24px;
+            font-size: 18px;
+            border: 2px solid transparent;
             border-radius: var(--radius-lg);
-            background-color: var(--bg-secondary);
+            background: linear-gradient(135deg, var(--bg-secondary) 0%, color-mix(in srgb, var(--bg-secondary) 90%, black) 100%);
             color: var(--text-primary);
             transition: var(--transition);
+            box-shadow: 0 4px 20px var(--shadow-color);
         }
 
         .search-input:focus {
             outline: none;
             border-color: var(--accent-color);
-            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.2);
+            transform: translateY(-2px);
         }
 
         .clear-search {
             position: absolute;
-            right: 20px;
+            right: 24px;
             top: 50%;
             transform: translateY(-50%);
             background: none;
@@ -171,17 +175,23 @@
             color: var(--text-tertiary);
             cursor: pointer;
             display: none;
+            transition: var(--transition);
+        }
+
+        .clear-search:hover {
+            color: var(--error-color);
+            transform: translateY(-50%) scale(1.1);
         }
 
         .search-actions {
             display: flex;
-            gap: 12px;
+            gap: 16px;
             align-items: center;
             flex-wrap: wrap;
         }
 
         .btn {
-            padding: 12px 24px;
+            padding: 16px 32px;
             border-radius: var(--radius-md);
             border: none;
             font-weight: 600;
@@ -189,30 +199,34 @@
             transition: var(--transition);
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 12px;
+            font-size: 16px;
+            box-shadow: 0 4px 12px var(--shadow-color);
         }
 
         .btn-primary {
-            background-color: var(--accent-color);
+            background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
             color: white;
         }
 
         .btn-primary:hover:not(:disabled) {
-            background-color: color-mix(in srgb, var(--accent-color) 90%, black);
-            transform: translateY(-2px);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 24px rgba(59, 130, 246, 0.4);
         }
 
         .btn-secondary {
-            background-color: var(--bg-tertiary);
+            background: linear-gradient(135deg, var(--bg-tertiary) 0%, color-mix(in srgb, var(--bg-tertiary) 90%, black) 100%);
             color: var(--text-primary);
+            border: 1px solid var(--border-color);
         }
 
         .btn-secondary:hover {
-            background-color: var(--border-color);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px var(--shadow-color);
         }
 
         .btn-small {
-            padding: 8px 16px;
+            padding: 12px 24px;
             font-size: 14px;
         }
 
@@ -225,255 +239,297 @@
         .shortcut-hint {
             color: var(--text-tertiary);
             font-size: 14px;
+            padding: 12px 0;
         }
 
         /* Category Tabs */
         .category-tabs {
             display: flex;
             gap: 8px;
-            margin-bottom: 24px;
+            margin-bottom: 32px;
             overflow-x: auto;
-            padding-bottom: 8px;
+            padding-bottom: 12px;
         }
 
         .category-tab {
-            padding: 10px 20px;
-            background-color: var(--bg-tertiary);
-            border-radius: var(--radius-md);
+            padding: 12px 24px;
+            background: linear-gradient(135deg, var(--bg-tertiary) 0%, color-mix(in srgb, var(--bg-tertiary) 90%, black) 100%);
+            border-radius: var(--radius-lg);
             border: none;
             color: var(--text-secondary);
             cursor: pointer;
             white-space: nowrap;
             transition: var(--transition);
+            font-size: 15px;
+            font-weight: 500;
+            box-shadow: 0 2px 8px var(--shadow-color);
         }
 
         .category-tab:hover {
             color: var(--text-primary);
-            background-color: var(--border-color);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 16px var(--shadow-color);
         }
 
         .category-tab.active {
-            background-color: var(--accent-color);
+            background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
             color: white;
-        }
-
-        /* Selection Controls */
-        .selection-controls {
-            display: flex;
-            gap: 12px;
-            margin-bottom: 20px;
-            flex-wrap: wrap;
         }
 
         /* Sites Grid */
         .sites-section {
-            margin-bottom: 32px;
+            margin-bottom: 48px;
         }
 
         .sites-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 16px;
-            margin-bottom: 24px;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 24px;
+            margin-bottom: 32px;
         }
 
         .site-card {
-            background-color: var(--bg-secondary);
+            background: linear-gradient(135deg, var(--bg-secondary) 0%, color-mix(in srgb, var(--bg-secondary) 90%, black) 100%);
             border: 1px solid var(--border-color);
-            border-radius: var(--radius-md);
-            padding: 20px;
-            transition: var(--transition);
+            border-radius: var(--radius-lg);
+            padding: 24px;
+            transition: all 0.3s ease;
             animation: fadeIn 0.3s ease;
             position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 20px var(--shadow-color);
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
+        .site-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .site-card.selected {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 32px rgba(59, 130, 246, 0.3);
+            border-color: #3b82f6;
+        }
+
+        .site-card.selected::before {
+            transform: scaleX(1);
         }
 
         .site-card:hover {
-            border-color: var(--accent-color);
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px var(--shadow-color);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 28px var(--shadow-color);
+        }
+
+        .site-card.selected:hover {
+            transform: translateY(-5px);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .site-card-header {
             display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            margin-bottom: 12px;
-        }
-
-        .site-name {
-            font-weight: 600;
-            color: var(--text-primary);
-            font-size: 16px;
-        }
-
-        .site-category {
-            font-size: 12px;
-            color: var(--text-tertiary);
-            background-color: var(--bg-tertiary);
-            padding: 2px 8px;
-            border-radius: 20px;
-            margin-top: 4px;
-            display: inline-block;
-        }
-
-        .site-url {
-            font-size: 12px;
-            color: var(--text-tertiary);
-            margin: 12px 0;
-            word-break: break-all;
-            font-family: monospace;
-            background-color: var(--bg-primary);
-            padding: 8px;
-            border-radius: var(--radius-sm);
-            border: 1px solid var(--border-color);
-        }
-
-        .last-used {
-            font-size: 12px;
-            color: var(--text-tertiary);
-            margin-top: 8px;
-        }
-
-        .site-actions {
-            display: flex;
-            gap: 8px;
-            margin-top: 12px;
-        }
-
-        .action-btn {
-            padding: 6px 12px;
-            font-size: 12px;
-            border-radius: var(--radius-sm);
-            border: 1px solid var(--border-color);
-            background-color: var(--bg-tertiary);
-            color: var(--text-primary);
-            cursor: pointer;
-            transition: var(--transition);
-        }
-
-        .action-btn:hover {
-            background-color: var(--accent-color);
-            color: white;
-            border-color: var(--accent-color);
-        }
-
-        .action-btn.delete {
-            background-color: var(--error-color);
-            color: white;
-            border-color: var(--error-color);
-        }
-
-        .action-btn.delete:hover {
-            background-color: color-mix(in srgb, var(--error-color) 90%, black);
-        }
-
-        /* Checkbox */
-        .checkbox-container {
-            display: flex;
             align-items: center;
-            gap: 8px;
-            margin-top: 12px;
-        }
-
-        .checkbox {
-            width: 20px;
-            height: 20px;
-            border-radius: 4px;
-            border: 2px solid var(--border-color);
-            background-color: var(--bg-tertiary);
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .checkbox.checked {
-            background-color: var(--accent-color);
-            border-color: var(--accent-color);
-        }
-
-        /* Custom Site Input */
-        .custom-site {
-            margin-top: 32px;
-            background-color: var(--bg-secondary);
-            border-radius: var(--radius-md);
-            padding: 24px;
-            border: 1px solid var(--border-color);
-        }
-
-        .custom-site-inputs {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 16px;
             margin-bottom: 16px;
         }
 
-        .custom-site-inputs input {
-            padding: 12px 16px;
-            border-radius: var(--radius-md);
-            border: 1px solid var(--border-color);
-            background-color: var(--bg-primary);
+        .site-icon {
+            width: 56px;
+            height: 56px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: white;
+            flex-shrink: 0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
+        }
+
+        .site-card:hover .site-icon {
+            transform: scale(1.1);
+        }
+
+        .site-info h3 {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 4px;
             color: var(--text-primary);
+        }
+
+        .site-info .category {
+            font-size: 14px;
+            color: var(--text-tertiary);
+            font-weight: 500;
+            padding: 4px 12px;
+            background: var(--bg-tertiary);
+            border-radius: 20px;
+            display: inline-block;
+        }
+
+        .selected-indicator {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--success-color);
+            font-weight: 500;
+            font-size: 14px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            margin-top: 16px;
+        }
+
+        .site-card.selected .selected-indicator {
+            opacity: 1;
+        }
+
+        .edit-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            border: 1px solid var(--border-color);
+            background: var(--bg-tertiary);
+            color: var(--text-secondary);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+            z-index: 2;
+        }
+
+        .edit-btn:hover {
+            background: var(--accent-color);
+            color: white;
+            border-color: var(--accent-color);
+            transform: rotate(90deg);
+        }
+
+        /* Custom Site Input */
+        .custom-site {
+            margin-top: 40px;
+            background: linear-gradient(135deg, var(--bg-secondary) 0%, color-mix(in srgb, var(--bg-secondary) 90%, black) 100%);
+            border-radius: var(--radius-lg);
+            padding: 32px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 4px 20px var(--shadow-color);
+        }
+
+        .custom-site h3 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: var(--text-primary);
+            font-weight: 700;
+            background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .custom-site-inputs {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 20px;
+            margin-bottom: 24px;
+        }
+
+        .custom-site-inputs input {
+            padding: 16px;
+            border-radius: var(--radius-md);
+            border: 2px solid var(--border-color);
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            font-size: 16px;
+            transition: var(--transition);
+        }
+
+        .custom-site-inputs input:focus {
+            outline: none;
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+            transform: translateY(-2px);
         }
 
         /* Recent Searches */
         .recent-searches {
-            margin-bottom: 32px;
+            margin-bottom: 48px;
+        }
+
+        .recent-searches h3 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: var(--text-primary);
+            font-weight: 700;
         }
 
         .chips-container {
             display: flex;
-            gap: 8px;
+            gap: 12px;
             overflow-x: auto;
-            padding: 16px 0;
-            margin-bottom: 16px;
+            padding: 20px 0;
+            margin-bottom: 20px;
         }
 
         .chip {
-            padding: 8px 16px;
-            background-color: var(--bg-tertiary);
-            border-radius: 20px;
+            padding: 12px 24px;
+            background: linear-gradient(135deg, var(--bg-tertiary) 0%, color-mix(in srgb, var(--bg-tertiary) 90%, black) 100%);
+            border-radius: 30px;
             color: var(--text-secondary);
             cursor: pointer;
             white-space: nowrap;
             transition: var(--transition);
             border: none;
             font-family: inherit;
+            font-size: 15px;
+            font-weight: 500;
+            box-shadow: 0 2px 8px var(--shadow-color);
         }
 
         .chip:hover {
-            background-color: var(--accent-color);
+            background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
             color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 16px rgba(59, 130, 246, 0.4);
         }
 
         .history-actions {
             display: flex;
-            gap: 12px;
+            gap: 16px;
             flex-wrap: wrap;
         }
 
         /* Toast */
         .toast {
             position: fixed;
-            bottom: 24px;
-            right: 24px;
-            background-color: var(--bg-secondary);
+            bottom: 32px;
+            right: 32px;
+            background: linear-gradient(135deg, var(--bg-secondary) 0%, color-mix(in srgb, var(--bg-secondary) 90%, black) 100%);
             border: 1px solid var(--border-color);
-            border-radius: var(--radius-md);
-            padding: 16px 24px;
+            border-radius: var(--radius-lg);
+            padding: 20px 32px;
             display: flex;
             align-items: center;
-            gap: 12px;
-            box-shadow: 0 4px 12px var(--shadow-color);
+            gap: 16px;
+            box-shadow: 0 8px 32px var(--shadow-color);
             z-index: 1000;
             transform: translateY(100px);
             opacity: 0;
-            transition: transform 0.3s ease, opacity 0.3s ease;
+            transition: transform 0.4s ease, opacity 0.4s ease;
+            font-size: 16px;
+            max-width: 400px;
         }
 
         .toast.show {
@@ -490,8 +546,8 @@
             display: none;
             width: 24px;
             height: 24px;
-            border: 3px solid var(--border-color);
-            border-top-color: var(--accent-color);
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-top-color: white;
             border-radius: 50%;
             animation: spin 1s linear infinite;
         }
@@ -512,10 +568,12 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
+            background-color: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(8px);
             z-index: 1000;
             align-items: center;
             justify-content: center;
+            animation: fadeIn 0.3s ease;
         }
 
         .modal.show {
@@ -523,26 +581,34 @@
         }
 
         .modal-content {
-            background-color: var(--bg-secondary);
+            background: linear-gradient(135deg, var(--bg-secondary) 0%, color-mix(in srgb, var(--bg-secondary) 90%, black) 100%);
             border-radius: var(--radius-lg);
-            padding: 32px;
+            padding: 40px;
             width: 90%;
             max-width: 500px;
-            max-height: 90vh;
-            overflow-y: auto;
             border: 1px solid var(--border-color);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+            animation: slideUp 0.4s ease;
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
         }
 
         .modal-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 24px;
+            margin-bottom: 32px;
         }
 
         .modal-title {
-            font-size: 20px;
-            font-weight: 600;
+            font-size: 24px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
         .close-modal {
@@ -550,41 +616,57 @@
             border: none;
             color: var(--text-tertiary);
             cursor: pointer;
-            font-size: 24px;
-            padding: 4px;
+            font-size: 28px;
+            padding: 8px;
+            transition: var(--transition);
+        }
+
+        .close-modal:hover {
+            color: var(--error-color);
+            transform: rotate(90deg);
         }
 
         .modal-form {
             display: flex;
             flex-direction: column;
-            gap: 16px;
+            gap: 20px;
         }
 
         .modal-form input {
-            padding: 12px 16px;
+            padding: 16px;
             border-radius: var(--radius-md);
-            border: 1px solid var(--border-color);
-            background-color: var(--bg-primary);
+            border: 2px solid var(--border-color);
+            background: var(--bg-primary);
             color: var(--text-primary);
+            font-size: 16px;
+            transition: var(--transition);
+        }
+
+        .modal-form input:focus {
+            outline: none;
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
         }
 
         .modal-actions {
             display: flex;
-            gap: 12px;
-            margin-top: 24px;
+            gap: 16px;
+            margin-top: 32px;
             justify-content: flex-end;
         }
 
         /* Responsive */
-        @media (max-width: 768px) {
-            .header-top {
-                flex-direction: column;
-                gap: 16px;
-                align-items: stretch;
+        @media (max-width: 1200px) {
+            .sites-grid {
+                grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
             }
+        }
 
-            .theme-controls {
-                justify-content: center;
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 24px;
+                text-align: center;
             }
 
             .search-actions {
@@ -597,7 +679,8 @@
             }
 
             .sites-grid {
-                grid-template-columns: 1fr;
+                grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+                gap: 20px;
             }
 
             .custom-site-inputs {
@@ -605,8 +688,22 @@
             }
 
             .modal-content {
-                padding: 24px;
+                padding: 32px 24px;
                 width: 95%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .sites-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .site-card {
+                padding: 20px;
+            }
+            
+            .btn {
+                padding: 14px 24px;
             }
         }
 
@@ -614,38 +711,36 @@
         .hidden {
             display: none !important;
         }
-
-        .fade-out {
-            animation: fadeOut 0.3s ease;
-        }
-
-        @keyframes fadeOut {
-            from { opacity: 1; transform: translateY(0); }
-            to { opacity: 0; transform: translateY(10px); }
-        }
     </style>
 </head>
 <body class="dark-theme">
     <header>
         <div class="container">
-            <div class="header-top">
+            <div class="header-content">
                 <div class="logo">
                     <div class="logo-icon">
-                        <span class="material-icons-round">search</span>
+                        <span class="material-icons-round">compare_arrows</span>
                     </div>
-                    <h1>QuickSearch</h1>
+                    <div class="logo-text">
+                        <h1>Select Sources</h1>
+                        <p>Compare prices across top online stores in India</p>
+                    </div>
                 </div>
-                <div class="theme-controls">
-                    <button class="theme-toggle" id="themeToggle" title="Toggle theme">
-                        <span class="material-icons-round">dark_mode</span>
-                    </button>
-                </div>
+                <button class="theme-toggle" id="themeToggle" title="Toggle theme">
+                    <span class="material-icons-round">dark_mode</span>
+                </button>
             </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <!-- Search Section -->
+        <section class="search-section">
             <div class="search-container">
                 <input type="text" 
                        class="search-input" 
                        id="searchInput" 
-                       placeholder="What are you looking for? (e.g., 'CeraVe cleanser')"
+                       placeholder="What product are you looking for? (e.g., 'CeraVe cleanser', 'iPhone 15')"
                        autocomplete="off">
                 <button class="clear-search" id="clearSearch">
                     <span class="material-icons-round">close</span>
@@ -654,37 +749,19 @@
             <div class="search-actions">
                 <button class="btn btn-primary" id="searchBtn">
                     <span class="material-icons-round">search</span>
-                    Search All Sites
+                    Search All Stores
                     <div class="spinner"></div>
                 </button>
-                <div class="checkbox-container">
-                    <div class="checkbox" id="newWindowCheckbox"></div>
-                    <span>Open in single new window</span>
-                </div>
                 <div class="shortcut-hint">
-                    Press Ctrl+K to focus • Enter to search
+                    Press Ctrl+K to focus
                 </div>
             </div>
-        </div>
-    </header>
+        </section>
 
-    <main class="container">
         <!-- Category Tabs -->
         <div class="category-tabs" id="categoryTabs">
-            <button class="category-tab active" data-category="all">All Sites</button>
+            <button class="category-tab active" data-category="all">All Stores</button>
             <!-- Categories will be populated by JavaScript -->
-        </div>
-
-        <!-- Selection Controls -->
-        <div class="selection-controls">
-            <button class="btn btn-secondary btn-small" id="selectAllBtn">
-                <span class="material-icons-round">check_box</span>
-                Select All
-            </button>
-            <button class="btn btn-secondary btn-small" id="deselectAllBtn">
-                <span class="material-icons-round">check_box_outline_blank</span>
-                Deselect All
-            </button>
         </div>
 
         <!-- Sites Grid -->
@@ -696,37 +773,39 @@
 
         <!-- Custom Site Input -->
         <section class="custom-site">
-            <h3 style="margin-bottom: 16px;">Add Custom Site</h3>
+            <h3>Add Custom Store</h3>
             <div class="custom-site-inputs">
-                <input type="text" id="customSiteName" placeholder="Site Name">
-                <input type="text" id="customSiteCategory" placeholder="Category (e.g., Electronics)">
-                <input type="text" id="customSiteUrl" placeholder="Search URL (e.g., https://example.com/search?q=)">
+                <input type="text" id="customSiteName" placeholder="Store Name">
+                <input type="text" id="customSiteCategory" placeholder="Category">
+                <input type="text" id="customSiteUrl" placeholder="Search URL">
             </div>
             <button class="btn btn-secondary" id="addCustomSiteBtn">
                 <span class="material-icons-round">add</span>
-                Add Custom Site
+                Add Custom Store
             </button>
         </section>
 
         <!-- Recent Searches -->
         <section class="recent-searches">
-            <h3 style="margin-bottom: 16px;">Recent Searches</h3>
+            <h3>Recent Searches</h3>
             <div class="chips-container" id="recentSearches">
                 <!-- Recent search chips will appear here -->
             </div>
             <div class="history-actions">
-                <button class="btn btn-secondary" id="clearHistoryBtn">
+                <button class="btn btn-secondary btn-small" id="clearHistoryBtn">
                     <span class="material-icons-round">delete_sweep</span>
                     Clear History
                 </button>
-                <button class="btn btn-secondary" id="downloadHistoryBtn">
+                <button class="btn btn-secondary btn-small" id="downloadHistoryBtn">
                     <span class="material-icons-round">download</span>
                     Download History
                 </button>
                 <input type="text" 
                        id="filterHistory" 
                        placeholder="Filter history..."
-                       style="flex: 1; min-width: 200px; padding: 0 16px; border-radius: var(--radius-md); border: 1px solid var(--border-color); background-color: var(--bg-primary); color: var(--text-primary);">
+                       style="flex: 1; min-width: 200px; padding: 0 20px; border-radius: var(--radius-md); border: 2px solid var(--border-color); background: var(--bg-primary); color: var(--text-primary); font-size: 15px; transition: var(--transition);"
+                       onfocus="this.style.borderColor='var(--accent-color)'; this.style.boxShadow='0 0 0 3px rgba(59, 130, 246, 0.1)'"
+                       onblur="this.style.borderColor='var(--border-color)'; this.style.boxShadow='none'">
             </div>
         </section>
     </main>
@@ -735,19 +814,19 @@
     <div class="modal" id="editModal">
         <div class="modal-content">
             <div class="modal-header">
-                <h3 class="modal-title">Edit Site</h3>
+                <h3 class="modal-title">Edit Store</h3>
                 <button class="close-modal" id="closeModal">
                     <span class="material-icons-round">close</span>
                 </button>
             </div>
             <div class="modal-form">
-                <input type="text" id="editSiteName" placeholder="Site Name">
+                <input type="text" id="editSiteName" placeholder="Store Name">
                 <input type="text" id="editSiteCategory" placeholder="Category">
                 <input type="text" id="editSiteUrl" placeholder="Search URL">
             </div>
             <div class="modal-actions">
-                <button class="btn btn-secondary" id="cancelEditBtn">Cancel</button>
-                <button class="btn btn-primary" id="saveEditBtn">Save Changes</button>
+                <button class="btn btn-secondary btn-small" id="cancelEditBtn">Cancel</button>
+                <button class="btn btn-primary btn-small" id="saveEditBtn">Save Changes</button>
             </div>
         </div>
     </div>
@@ -759,26 +838,119 @@
         // ============================================
         // SITE LIST SECTION - REPLACE THIS SECTION
         // ============================================
-        // Replace the URLs below with your own working search URLs
-        // Format: { name: "Site Name", category: "Category", url: "https://example.com/search?q=" }
-        // IMPORTANT: Make sure each URL ends with the search parameter placeholder
         const sites = [
-            { name: "Flipkart", category: "General", url: "https://www.flipkart.com/search?q=", lastUsed: null },
-            { name: "Amazon", category: "General", url: "https://www.amazon.in/s?k=", lastUsed: null },
-            { name: "Wellness Forever", category: "Pharmacy", url: "https://www.wellnessforever.com/search?q=", lastUsed: null },
-            { name: "Noble Plus", category: "General", url: "https://nobleplus.in/?s=", lastUsed: null },
-            { name: "1mg", category: "Pharmacy", url: "https://www.1mg.com/search/all?name=", lastUsed: null },
-            { name: "Nykaa", category: "Beauty", url: "https://www.nykaa.com/search/result/?q=", lastUsed: null },
-            { name: "Apollo Pharmacy", category: "Pharmacy", url: "https://www.apollopharmacy.in/search-medicines/", lastUsed: null },
-            { name: "Pharmeasy", category: "Pharmacy", url: "https://pharmeasy.in/search/all?name=", lastUsed: null },
-            { name: "Netmeds", category: "Pharmacy", url: "https://www.netmeds.com/products?q=", lastUsed: null },
-            { name: "Truemeds", category: "Pharmacy", url: "https://www.truemeds.in/search/", lastUsed: null },
-            { name: "Jiomart", category: "Grocery", url: "https://www.jiomart.com/search/", lastUsed: null },
-            { name: "Zepto", category: "Grocery", url: "https://www.zepto.com/search?query=", lastUsed: null },
-            { name: "Blinkit", category: "Grocery", url: "https://blinkit.com/s/?q=", lastUsed: null },
-            { name: "Swiggy Instamart", category: "Grocery", url: "https://www.swiggy.com/instamart/search?custom_back=true&query=", lastUsed: null },
-            { name: "Dmart", category: "Grocery", url: "https://www.dmart.in/search?searchTerm=", lastUsed: null },
-            { name: "Croma", category: "Electronics", url: "https://www.croma.com/searchB?q=", lastUsed: null }
+            { 
+                name: "Flipkart", 
+                category: "E-commerce", 
+                url: "https://www.flipkart.com/search?q=", 
+                icon: "fas fa-shopping-cart",
+                iconColor: "#2874f0"
+            },
+            { 
+                name: "Amazon", 
+                category: "E-commerce", 
+                url: "https://www.amazon.in/s?k=", 
+                icon: "fab fa-amazon",
+                iconColor: "#FF9900"
+            },
+            { 
+                name: "Wellness Forever", 
+                category: "Pharmacy", 
+                url: "https://www.wellnessforever.com/search?q=", 
+                icon: "fas fa-prescription-bottle-medical",
+                iconColor: "#00A79D"
+            },
+            { 
+                name: "Noble Plus", 
+                category: "E-commerce", 
+                url: "https://nobleplus.in/?s=", 
+                icon: "fas fa-plus-square",
+                iconColor: "#6B46C1"
+            },
+            { 
+                name: "1mg", 
+                category: "Pharmacy", 
+                url: "https://www.1mg.com/search/all?name=", 
+                icon: "fas fa-pills",
+                iconColor: "#FF6B6B"
+            },
+            { 
+                name: "Nykaa", 
+                category: "Beauty", 
+                url: "https://www.nykaa.com/search/result/?q=", 
+                icon: "fas fa-spa",
+                iconColor: "#EC4899"
+            },
+            { 
+                name: "Apollo Pharmacy", 
+                category: "Pharmacy", 
+                url: "https://www.apollopharmacy.in/search-medicines/", 
+                icon: "fas fa-hospital",
+                iconColor: "#0088CC"
+            },
+            { 
+                name: "Pharmeasy", 
+                category: "Pharmacy", 
+                url: "https://pharmeasy.in/search/all?name=", 
+                icon: "fas fa-truck-medical",
+                iconColor: "#0D9488"
+            },
+            { 
+                name: "Netmeds", 
+                category: "Pharmacy", 
+                url: "https://www.netmeds.com/products?q=", 
+                icon: "fas fa-capsules",
+                iconColor: "#059669"
+            },
+            { 
+                name: "Truemeds", 
+                category: "Pharmacy", 
+                url: "https://www.truemeds.in/search/", 
+                icon: "fas fa-heartbeat",
+                iconColor: "#3B82F6"
+            },
+            { 
+                name: "Jiomart", 
+                category: "Grocery", 
+                url: "https://www.jiomart.com/search/", 
+                icon: "fas fa-shopping-basket",
+                iconColor: "#FF6B35"
+            },
+            { 
+                name: "Zepto", 
+                category: "Grocery", 
+                url: "https://www.zepto.com/search?query=", 
+                icon: "fas fa-bolt",
+                iconColor: "#00B894"
+            },
+            { 
+                name: "Blinkit", 
+                category: "Grocery", 
+                url: "https://blinkit.com/s/?q=", 
+                icon: "fas fa-shipping-fast",
+                iconColor: "#FFD166"
+            },
+            { 
+                name: "Swiggy Instamart", 
+                category: "Grocery", 
+                url: "https://www.swiggy.com/instamart/search?custom_back=true&query=", 
+                icon: "fas fa-utensils",
+                iconColor: "#FF6B6B"
+            },
+            { 
+                name: "Dmart", 
+                category: "Grocery", 
+                url: "https://www.dmart.in/search?searchTerm=", 
+                icon: "fas fa-store",
+                iconColor: "#1A56DB"
+            },
+            { 
+                name: "Croma", 
+                category: "Electronics", 
+                url: "https://www.croma.com/searchB?q=", 
+                icon: "fas fa-laptop",
+                iconColor: "#000000"
+            }
         ];
         // ============================================
         // END OF SITE LIST SECTION
@@ -799,7 +971,6 @@
             searchInput: document.getElementById('searchInput'),
             searchBtn: document.getElementById('searchBtn'),
             clearSearch: document.getElementById('clearSearch'),
-            newWindowCheckbox: document.getElementById('newWindowCheckbox'),
             sitesGrid: document.getElementById('sitesGrid'),
             categoryTabs: document.getElementById('categoryTabs'),
             recentSearches: document.getElementById('recentSearches'),
@@ -811,8 +982,6 @@
             customSiteCategory: document.getElementById('customSiteCategory'),
             customSiteUrl: document.getElementById('customSiteUrl'),
             addCustomSiteBtn: document.getElementById('addCustomSiteBtn'),
-            selectAllBtn: document.getElementById('selectAllBtn'),
-            deselectAllBtn: document.getElementById('deselectAllBtn'),
             editModal: document.getElementById('editModal'),
             editSiteName: document.getElementById('editSiteName'),
             editSiteCategory: document.getElementById('editSiteCategory'),
@@ -836,7 +1005,7 @@
 
         // Load state from localStorage
         function loadState() {
-            const saved = localStorage.getItem('quickSearchState');
+            const saved = localStorage.getItem('priceCompareState');
             if (saved) {
                 const parsed = JSON.parse(saved);
                 state.selectedSites = new Set(parsed.selectedSites || []);
@@ -844,24 +1013,22 @@
                 state.theme = parsed.theme || 'dark';
                 state.searchHistory = parsed.searchHistory || [];
                 
-                // Update sites with saved data
-                sites.forEach(site => {
-                    const savedSite = parsed.sites?.find(s => s.name === site.name);
-                    if (savedSite) {
-                        site.lastUsed = savedSite.lastUsed;
-                    }
-                });
-                
                 // Add custom sites from storage
                 if (parsed.customSites) {
-                    sites.push(...parsed.customSites);
+                    parsed.customSites.forEach(site => {
+                        // Ensure custom sites have proper structure
+                        if (!site.icon) site.icon = "fas fa-globe";
+                        if (!site.iconColor) site.iconColor = "#3b82f6";
+                        site.custom = true;
+                        sites.push(site);
+                    });
                 }
             }
             
             // Apply theme
             document.body.classList.toggle('light-theme', state.theme === 'light');
             elements.themeToggle.querySelector('.material-icons-round').textContent = 
-                state.theme === 'dark' ? 'dark_mode' : 'light_mode';
+                state.theme === 'dark' ? 'light_mode' : 'dark_mode';
         }
 
         // Save state to localStorage
@@ -871,13 +1038,9 @@
                 recentSearches: state.recentSearches,
                 theme: state.theme,
                 searchHistory: state.searchHistory,
-                sites: sites.map(site => ({
-                    name: site.name,
-                    lastUsed: site.lastUsed
-                })),
                 customSites: sites.filter(site => site.custom)
             };
-            localStorage.setItem('quickSearchState', JSON.stringify(stateToSave));
+            localStorage.setItem('priceCompareState', JSON.stringify(stateToSave));
         }
 
         // Render sites grid
@@ -897,37 +1060,40 @@
             filteredSites.sort((a, b) => a.name.localeCompare(b.name));
             
             filteredSites.forEach((site, index) => {
+                const isSelected = state.selectedSites.has(site.name);
                 const card = document.createElement('div');
-                card.className = 'site-card';
+                card.className = `site-card ${isSelected ? 'selected' : ''}`;
                 card.innerHTML = `
+                    ${site.custom ? '<button class="edit-btn" data-index="' + index + '" title="Edit store"><span class="material-icons-round" style="font-size: 18px;">edit</span></button>' : ''}
                     <div class="site-card-header">
-                        <div>
-                            <div class="site-name">${site.name}</div>
-                            <div class="site-category">${site.category}</div>
+                        <div class="site-icon" style="background: linear-gradient(135deg, ${site.iconColor} 0%, color-mix(in srgb, ${site.iconColor} 90%, black) 100%);">
+                            <i class="${site.icon}"></i>
+                        </div>
+                        <div class="site-info">
+                            <h3>${site.name}</h3>
+                            <span class="category">${site.category}</span>
                         </div>
                     </div>
-                    <div class="site-url">${site.url}</div>
-                    ${site.lastUsed ? `<div class="last-used">Last used: ${formatTimeAgo(site.lastUsed)}</div>` : ''}
-                    <div class="checkbox-container">
-                        <div class="checkbox ${state.selectedSites.has(site.name) ? 'checked' : ''}" 
-                             data-site="${site.name}">
-                            ${state.selectedSites.has(site.name) ? '<span class="material-icons-round" style="color: white; font-size: 16px;">check</span>' : ''}
-                        </div>
-                        <span>Select for search</span>
-                    </div>
-                    <div class="site-actions">
-                        <button class="action-btn edit-btn" data-index="${index}">
-                            <span class="material-icons-round" style="font-size: 14px;">edit</span>
-                            Edit
-                        </button>
-                        ${site.custom ? `
-                        <button class="action-btn delete delete-btn" data-index="${index}">
-                            <span class="material-icons-round" style="font-size: 14px;">delete</span>
-                            Delete
-                        </button>
-                        ` : ''}
+                    <div class="selected-indicator">
+                        <span class="material-icons-round" style="font-size: 20px;">check_circle</span>
+                        Selected for search
                     </div>
                 `;
+                
+                // Click to select/deselect
+                card.addEventListener('click', (e) => {
+                    if (!e.target.closest('.edit-btn')) {
+                        if (state.selectedSites.has(site.name)) {
+                            state.selectedSites.delete(site.name);
+                            card.classList.remove('selected');
+                        } else {
+                            state.selectedSites.add(site.name);
+                            card.classList.add('selected');
+                        }
+                        saveState();
+                    }
+                });
+                
                 elements.sitesGrid.appendChild(card);
             });
         }
@@ -938,7 +1104,7 @@
             elements.categoryTabs.innerHTML = categories.map(category => `
                 <button class="category-tab ${state.currentCategory === category ? 'active' : ''}" 
                         data-category="${category}">
-                    ${category.charAt(0).toUpperCase() + category.slice(1)}
+                    ${category}
                 </button>
             `).join('');
         }
@@ -955,7 +1121,7 @@
                 );
             }
             
-            searchesToShow.slice(0, 20).forEach(search => {
+            searchesToShow.slice(0, 15).forEach(search => {
                 const chip = document.createElement('button');
                 chip.className = 'chip';
                 chip.textContent = search;
@@ -965,16 +1131,6 @@
                 });
                 elements.recentSearches.appendChild(chip);
             });
-        }
-
-        // Format time ago
-        function formatTimeAgo(timestamp) {
-            const seconds = Math.floor((Date.now() - timestamp) / 1000);
-            
-            if (seconds < 60) return 'just now';
-            if (seconds < 3600) return `${Math.floor(seconds / 60)} minutes ago`;
-            if (seconds < 86400) return `${Math.floor(seconds / 3600)} hours ago`;
-            return `${Math.floor(seconds / 86400)} days ago`;
         }
 
         // Show toast notification
@@ -999,7 +1155,7 @@
             
             const selectedSiteNames = Array.from(state.selectedSites);
             if (selectedSiteNames.length === 0) {
-                showToast('Please select at least one site', 'error');
+                showToast('Please select at least one store', 'error');
                 return;
             }
             
@@ -1010,7 +1166,7 @@
             // Add to recent searches
             if (!state.recentSearches.includes(query)) {
                 state.recentSearches.unshift(query);
-                state.recentSearches = state.recentSearches.slice(0, 20);
+                state.recentSearches = state.recentSearches.slice(0, 15);
             }
             
             // Add to search history
@@ -1018,14 +1174,6 @@
                 query,
                 timestamp: Date.now(),
                 sites: selectedSiteNames
-            });
-            
-            // Update last used timestamps
-            selectedSiteNames.forEach(siteName => {
-                const site = sites.find(s => s.name === siteName);
-                if (site) {
-                    site.lastUsed = Date.now();
-                }
             });
             
             saveState();
@@ -1037,8 +1185,9 @@
                 const site = sites.find(s => s.name === siteName);
                 if (site) {
                     const encodedQuery = encodeURIComponent(query);
-                    // Handle different URL formats
                     let searchUrl = site.url;
+                    
+                    // Handle different URL formats
                     if (searchUrl.includes('?')) {
                         if (searchUrl.includes('=')) {
                             // URL already has query parameter
@@ -1051,37 +1200,21 @@
                         // URL has no query parameter at all
                         searchUrl += encodedQuery;
                     }
+                    
                     urls.push(searchUrl);
                 }
             });
             
-            // Open URLs
-            const openInNewWindow = elements.newWindowCheckbox.classList.contains('checked');
-            
-            if (openInNewWindow) {
-                // Open all in one new window
-                const newWindow = window.open('', '_blank');
-                urls.forEach((url, index) => {
-                    if (index === 0) {
-                        newWindow.location.href = url;
-                    } else {
-                        setTimeout(() => {
-                            newWindow.open(url, '_blank');
-                        }, 100 * index);
-                    }
-                });
-            } else {
-                // Open each in new tab
-                urls.forEach(url => {
-                    window.open(url, '_blank');
-                });
-            }
+            // Open each in new tab
+            urls.forEach(url => {
+                window.open(url, '_blank');
+            });
             
             // Re-enable button after delay
             setTimeout(() => {
                 elements.searchBtn.disabled = false;
                 elements.searchBtn.classList.remove('loading');
-                renderSites(); // Update last used times
+                showToast(`Searching ${selectedSiteNames.length} stores for "${query}"`);
             }, 1000);
         }
 
@@ -1097,7 +1230,7 @@
             }
             
             if (sites.some(site => site.name === name)) {
-                showToast('Site with this name already exists', 'error');
+                showToast('Store with this name already exists', 'error');
                 return;
             }
             
@@ -1108,11 +1241,13 @@
                 url += '=';
             }
             
+            const randomColor = `#${Math.floor(Math.random()*16777215).toString(16)}`;
             const newSite = {
                 name,
                 category,
                 url,
-                lastUsed: null,
+                icon: "fas fa-store",
+                iconColor: randomColor,
                 custom: true
             };
             
@@ -1126,7 +1261,7 @@
             elements.customSiteCategory.value = '';
             elements.customSiteUrl.value = '';
             
-            showToast('Custom site added successfully!');
+            showToast('Custom store added successfully!');
         }
 
         // Edit site
@@ -1157,7 +1292,7 @@
             // Check for duplicate name (excluding current site)
             const duplicate = sites.find((site, i) => i !== index && site.name === name);
             if (duplicate) {
-                showToast('Site with this name already exists', 'error');
+                showToast('Store with this name already exists', 'error');
                 return;
             }
             
@@ -1169,13 +1304,13 @@
             }
             
             // Update the site
+            const oldName = sites[index].name;
             sites[index].name = name;
             sites[index].category = category;
             sites[index].url = url;
             
             // Update selected sites if name changed
-            const oldName = sites[index].oldName;
-            if (oldName && state.selectedSites.has(oldName)) {
+            if (oldName !== name && state.selectedSites.has(oldName)) {
                 state.selectedSites.delete(oldName);
                 state.selectedSites.add(name);
             }
@@ -1185,7 +1320,7 @@
             renderSites();
             closeEditModal();
             
-            showToast('Site updated successfully!');
+            showToast('Store updated successfully!');
         }
 
         function closeEditModal() {
@@ -1195,7 +1330,7 @@
 
         // Delete custom site
         function deleteSite(index) {
-            if (!confirm('Are you sure you want to delete this site?')) return;
+            if (!confirm('Are you sure you want to delete this store?')) return;
             
             const site = sites[index];
             if (state.selectedSites.has(site.name)) {
@@ -1207,45 +1342,7 @@
             renderCategories();
             renderSites();
             
-            showToast('Site deleted successfully!');
-        }
-
-        // Select all sites
-        function selectAll() {
-            let filteredSites = [...sites];
-            
-            if (state.currentCategory !== 'all') {
-                filteredSites = filteredSites.filter(site => 
-                    site.category === state.currentCategory
-                );
-            }
-            
-            filteredSites.forEach(site => {
-                state.selectedSites.add(site.name);
-            });
-            
-            saveState();
-            renderSites();
-            showToast(`Selected ${filteredSites.length} sites`);
-        }
-
-        // Deselect all sites
-        function deselectAll() {
-            let filteredSites = [...sites];
-            
-            if (state.currentCategory !== 'all') {
-                filteredSites = filteredSites.filter(site => 
-                    site.category === state.currentCategory
-                );
-            }
-            
-            filteredSites.forEach(site => {
-                state.selectedSites.delete(site.name);
-            });
-            
-            saveState();
-            renderSites();
-            showToast(`Deselected ${filteredSites.length} sites`);
+            showToast('Store deleted successfully!');
         }
 
         // Setup event listeners
@@ -1271,40 +1368,15 @@
                 }
             });
             
-            // New window checkbox
-            elements.newWindowCheckbox.addEventListener('click', () => {
-                elements.newWindowCheckbox.classList.toggle('checked');
-            });
-            
-            // Sites grid (event delegation)
+            // Sites grid (event delegation for edit buttons)
             elements.sitesGrid.addEventListener('click', (e) => {
-                // Checkbox selection
-                const checkbox = e.target.closest('.checkbox');
-                if (checkbox) {
-                    const siteName = checkbox.dataset.site;
-                    if (state.selectedSites.has(siteName)) {
-                        state.selectedSites.delete(siteName);
-                    } else {
-                        state.selectedSites.add(siteName);
-                    }
-                    checkbox.classList.toggle('checked');
-                    saveState();
-                    return;
-                }
-                
-                // Edit button
                 const editBtn = e.target.closest('.edit-btn');
                 if (editBtn) {
                     const index = parseInt(editBtn.dataset.index);
-                    openEditModal(index);
-                    return;
-                }
-                
-                // Delete button
-                const deleteBtn = e.target.closest('.delete-btn');
-                if (deleteBtn) {
-                    const index = parseInt(deleteBtn.dataset.index);
-                    deleteSite(index);
+                    e.stopPropagation();
+                    if (sites[index].custom) {
+                        openEditModal(index);
+                    }
                     return;
                 }
             });
@@ -1321,12 +1393,6 @@
                     renderSites();
                 }
             });
-            
-            // Select all button
-            elements.selectAllBtn.addEventListener('click', selectAll);
-            
-            // Deselect all button
-            elements.deselectAllBtn.addEventListener('click', deselectAll);
             
             // Clear history
             elements.clearHistoryBtn.addEventListener('click', () => {
@@ -1368,7 +1434,7 @@
                 state.theme = state.theme === 'dark' ? 'light' : 'dark';
                 document.body.classList.toggle('light-theme', state.theme === 'light');
                 elements.themeToggle.querySelector('.material-icons-round').textContent = 
-                    state.theme === 'dark' ? 'dark_mode' : 'light_mode';
+                    state.theme === 'dark' ? 'light_mode' : 'dark_mode';
                 saveState();
             });
             

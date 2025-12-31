@@ -1,111 +1,22 @@
+// ===== FIXED JAVASCRIPT CODE - WORKS FOR ALL TABS =====
 document.addEventListener('DOMContentLoaded', function() {
     // All Indian e-commerce sites with search URLs
     const SOURCES = [
-        { 
-            name: "Amazon India", 
-            category: "General Shopping", 
-            url: "https://www.amazon.in/s?k=", 
-            icon: "A",
-            color: "#FF9900"
-        },
-        { 
-            name: "Flipkart", 
-            category: "General Shopping", 
-            url: "https://www.flipkart.com/search?q=", 
-            icon: "F",
-            color: "#2874F0"
-        },
-        { 
-            name: "Nykaa", 
-            category: "Beauty & Cosmetics", 
-            url: "https://www.nykaa.com/search/result/?q=", 
-            icon: "N",
-            color: "#BF0054"
-        },
-        { 
-            name: "PharmEasy", 
-            category: "Medicines & Health", 
-            url: "https://pharmeasy.in/search/all?name=", 
-            icon: "P",
-            color: "#00C896"
-        },
-        { 
-            name: "1mg", 
-            category: "Medicines & Health", 
-            url: "https://www.1mg.com/search/all?name=", 
-            icon: "1",
-            color: "#4A90E2"
-        },
-        { 
-            name: "Ajio", 
-            category: "Fashion & Apparel", 
-            url: "https://www.ajio.com/search/?query=", 
-            icon: "A",
-            color: "#000000"
-        },
-        { 
-            name: "Myntra", 
-            category: "Fashion & Apparel", 
-            url: "https://www.myntra.com/search?p%5B0%5D=brand%3A&sortBy=popularity&searchQuery=", 
-            icon: "M",
-            color: "#F24B62"
-        },
-        { 
-            name: "Netmeds", 
-            category: "Medicines & Health", 
-            url: "https://www.netmeds.com/catalogsearch/result?q=", 
-            icon: "N",
-            color: "#009639"
-        },
-        { 
-            name: "Tata CLiQ", 
-            category: "General Shopping", 
-            url: "https://www.tatacliq.com/search/?q=", 
-            icon: "T",
-            color: "#E71D36"
-        },
-        { 
-            name: "Snapdeal", 
-            category: "General Shopping", 
-            url: "https://www.snapdeal.com/search?keyword=", 
-            icon: "S",
-            color: "#FF5252"
-        },
-        { 
-            name: "Croma", 
-            category: "Electronics", 
-            url: "https://www.croma.com/search?q=", 
-            icon: "C",
-            color: "#0047AB"
-        },
-        { 
-            name: "Reliance Digital", 
-            category: "Electronics", 
-            url: "https://www.reliancedigital.in/search?text=", 
-            icon: "R",
-            color: "#D4AF37"
-        },
-        { 
-            name: "Purplle", 
-            category: "Beauty & Cosmetics", 
-            url: "https://www.purplle.com/search?searchQuery=", 
-            icon: "P",
-            color: "#6A1B9A"
-        },
-        { 
-            name: "BigBasket", 
-            category: "Grocery & Essentials", 
-            url: "https://www.bigbasket.com/search/?q=", 
-            icon: "B",
-            color: "#008000"
-        },
-        { 
-            name: "JioMart", 
-            category: "General Shopping", 
-            url: "https://www.jiomart.com/search?query=", 
-            icon: "J",
-            color: "#0078D7"
-        }
+        { name: "Amazon India", category: "General Shopping", url: "https://www.amazon.in/s?k=", icon: "A", color: "#FF9900" },
+        { name: "Flipkart", category: "General Shopping", url: "https://www.flipkart.com/search?q=", icon: "F", color: "#2874F0" },
+        { name: "Nykaa", category: "Beauty & Cosmetics", url: "https://www.nykaa.com/search/result/?q=", icon: "N", color: "#BF0054" },
+        { name: "PharmEasy", category: "Medicines & Health", url: "https://pharmeasy.in/search/all?name=", icon: "P", color: "#00C896" },
+        { name: "1mg", category: "Medicines & Health", url: "https://www.1mg.com/search/all?name=", icon: "1", color: "#4A90E2" },
+        { name: "Ajio", category: "Fashion & Apparel", url: "https://www.ajio.com/search/?query=", icon: "A", color: "#000000" },
+        { name: "Myntra", category: "Fashion & Apparel", url: "https://www.myntra.com/search?p%5B0%5D=brand%3A&sortBy=popularity&searchQuery=", icon: "M", color: "#F24B62" },
+        { name: "Netmeds", category: "Medicines & Health", url: "https://www.netmeds.com/catalogsearch/result?q=", icon: "N", color: "#009639" },
+        { name: "Tata CLiQ", category: "General Shopping", url: "https://www.tatacliq.com/search/?q=", icon: "T", color: "#E71D36" },
+        { name: "Snapdeal", category: "General Shopping", url: "https://www.snapdeal.com/search?keyword=", icon: "S", color: "#FF5252" },
+        { name: "Croma", category: "Electronics", url: "https://www.croma.com/search?q=", icon: "C", color: "#0047AB" },
+        { name: "Reliance Digital", category: "Electronics", url: "https://www.reliancedigital.in/search?text=", icon: "R", color: "#D4AF37" },
+        { name: "Purplle", category: "Beauty & Cosmetics", url: "https://www.purplle.com/search?searchQuery=", icon: "P", color: "#6A1B9A" },
+        { name: "BigBasket", category: "Grocery & Essentials", url: "https://www.bigbasket.com/search/?q=", icon: "B", color: "#008000" },
+        { name: "JioMart", category: "General Shopping", url: "https://www.jiomart.com/search?query=", icon: "J", color: "#0078D7" }
     ];
 
     // DOM Elements
@@ -209,7 +120,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Perform search and open tabs
+    // FIXED: Perform search and open tabs - WORKS FOR ALL TABS
     function performSearch() {
         const query = searchInput.value.trim();
         
@@ -226,33 +137,55 @@ document.addEventListener('DOMContentLoaded', function() {
         // Save to history
         saveToHistory(query);
 
-        // Open tabs with delay to avoid browser blocking
-        let delay = 0;
-        const tabsToOpen = [];
-        
+        // Create URLs array first
+        const urlsToOpen = [];
         selectedSources.forEach(sourceName => {
             const source = SOURCES.find(s => s.name === sourceName);
             if (source) {
                 const encodedQuery = encodeURIComponent(query);
                 const url = `${source.url}${encodedQuery}`;
-                tabsToOpen.push({ url, name: source.name });
+                urlsToOpen.push({ url, name: source.name });
             }
         });
 
-        showToast(`🚀 Opening ${tabsToOpen.length} tabs for "${query}"...`, 'success');
+        showToast(`🚀 Opening ${urlsToOpen.length} tabs for "${query}"...`, 'success');
 
-        // Open tabs with delay
-        tabsToOpen.forEach((tab, index) => {
-            setTimeout(() => {
-                window.open(tab.url, '_blank');
-            }, delay + (index * 300));
-        });
+        // FIXED METHOD: Open tabs one by one with user interaction
+        if (urlsToOpen.length > 1) {
+            // Show confirmation for multiple tabs
+            if (confirm(`This will open ${urlsToOpen.length} new tabs. Continue?`)) {
+                openTabsSequentially(urlsToOpen, 0);
+            }
+        } else {
+            // Single tab - open directly
+            window.open(urlsToOpen[0].url, '_blank');
+        }
 
         // Clear search after opening tabs
         setTimeout(() => {
             searchInput.value = '';
             searchInput.focus();
         }, 1000);
+    }
+
+    // FIXED: Open tabs sequentially to avoid browser blocking
+    function openTabsSequentially(urls, index) {
+        if (index >= urls.length) return;
+        
+        const currentUrl = urls[index];
+        const newTab = window.open(currentUrl.url, '_blank');
+        
+        if (newTab) {
+            // Tab opened successfully, move to next after delay
+            setTimeout(() => {
+                openTabsSequentially(urls, index + 1);
+            }, 500);
+        } else {
+            // If popup blocked, ask user to allow popups
+            if (index === 0) {
+                alert('⚠️ Pop-ups are blocked! Please allow pop-ups for this site and try again.');
+            }
+        }
     }
 
     // History management

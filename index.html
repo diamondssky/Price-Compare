@@ -1,77 +1,1424 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>PriceCompare India</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QuickSearch • Price Comparison Tool</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Material Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+    <style>
+        :root {
+            /* Default dark theme */
+            --bg-primary: #0f172a;
+            --bg-secondary: #1e293b;
+            --bg-tertiary: #334155;
+            --text-primary: #f8fafc;
+            --text-secondary: #cbd5e1;
+            --text-tertiary: #94a3b8;
+            --border-color: #475569;
+            --shadow-color: rgba(0, 0, 0, 0.3);
+            --accent-color: #3b82f6;
+            --success-color: #10b981;
+            --warning-color: #f59e0b;
+            --error-color: #ef4444;
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 16px;
+            --transition: all 0.2s ease;
+        }
+
+        .light-theme {
+            --bg-primary: #ffffff;
+            --bg-secondary: #f1f5f9;
+            --bg-tertiary: #e2e8f0;
+            --text-primary: #0f172a;
+            --text-secondary: #475569;
+            --text-tertiary: #64748b;
+            --border-color: #cbd5e1;
+            --shadow-color: rgba(0, 0, 0, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            transition: var(--transition);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            padding: 24px 0;
+            border-bottom: 1px solid var(--border-color);
+            background-color: var(--bg-secondary);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background-color: var(--accent-color);
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 24px;
+        }
+
+        .logo h1 {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .theme-controls {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .theme-toggle {
+            width: 40px;
+            height: 40px;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-color);
+            background-color: var(--bg-tertiary);
+            color: var(--text-primary);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+        }
+
+        .theme-toggle:hover {
+            transform: translateY(-2px);
+            border-color: var(--accent-color);
+        }
+
+        /* Main Content */
+        main {
+            padding: 32px 0;
+        }
+
+        /* Search Section */
+        .search-section {
+            margin-bottom: 32px;
+        }
+
+        .search-container {
+            position: relative;
+            margin-bottom: 16px;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 18px 52px 18px 20px;
+            font-size: 16px;
+            border: 2px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            background-color: var(--bg-secondary);
+            color: var(--text-primary);
+            transition: var(--transition);
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+
+        .clear-search {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: var(--text-tertiary);
+            cursor: pointer;
+            display: none;
+        }
+
+        .search-actions {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border-radius: var(--radius-md);
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background-color: var(--accent-color);
+            color: white;
+        }
+
+        .btn-primary:hover:not(:disabled) {
+            background-color: color-mix(in srgb, var(--accent-color) 90%, black);
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background-color: var(--bg-tertiary);
+            color: var(--text-primary);
+        }
+
+        .btn-secondary:hover {
+            background-color: var(--border-color);
+        }
+
+        .btn-small {
+            padding: 8px 16px;
+            font-size: 14px;
+        }
+
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none !important;
+        }
+
+        .shortcut-hint {
+            color: var(--text-tertiary);
+            font-size: 14px;
+        }
+
+        /* Category Tabs */
+        .category-tabs {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 24px;
+            overflow-x: auto;
+            padding-bottom: 8px;
+        }
+
+        .category-tab {
+            padding: 10px 20px;
+            background-color: var(--bg-tertiary);
+            border-radius: var(--radius-md);
+            border: none;
+            color: var(--text-secondary);
+            cursor: pointer;
+            white-space: nowrap;
+            transition: var(--transition);
+        }
+
+        .category-tab:hover {
+            color: var(--text-primary);
+            background-color: var(--border-color);
+        }
+
+        .category-tab.active {
+            background-color: var(--accent-color);
+            color: white;
+        }
+
+        /* Selection Controls */
+        .selection-controls {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        /* Sites Grid */
+        .sites-section {
+            margin-bottom: 32px;
+        }
+
+        .sites-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .site-card {
+            background-color: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            padding: 20px;
+            transition: var(--transition);
+            animation: fadeIn 0.3s ease;
+            position: relative;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .site-card:hover {
+            border-color: var(--accent-color);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px var(--shadow-color);
+        }
+
+        .site-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 12px;
+        }
+
+        .site-name {
+            font-weight: 600;
+            color: var(--text-primary);
+            font-size: 16px;
+        }
+
+        .site-category {
+            font-size: 12px;
+            color: var(--text-tertiary);
+            background-color: var(--bg-tertiary);
+            padding: 2px 8px;
+            border-radius: 20px;
+            margin-top: 4px;
+            display: inline-block;
+        }
+
+        .site-url {
+            font-size: 12px;
+            color: var(--text-tertiary);
+            margin: 12px 0;
+            word-break: break-all;
+            font-family: monospace;
+            background-color: var(--bg-primary);
+            padding: 8px;
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--border-color);
+        }
+
+        .last-used {
+            font-size: 12px;
+            color: var(--text-tertiary);
+            margin-top: 8px;
+        }
+
+        .site-actions {
+            display: flex;
+            gap: 8px;
+            margin-top: 12px;
+        }
+
+        .action-btn {
+            padding: 6px 12px;
+            font-size: 12px;
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--border-color);
+            background-color: var(--bg-tertiary);
+            color: var(--text-primary);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .action-btn:hover {
+            background-color: var(--accent-color);
+            color: white;
+            border-color: var(--accent-color);
+        }
+
+        .action-btn.delete {
+            background-color: var(--error-color);
+            color: white;
+            border-color: var(--error-color);
+        }
+
+        .action-btn.delete:hover {
+            background-color: color-mix(in srgb, var(--error-color) 90%, black);
+        }
+
+        /* Checkbox */
+        .checkbox-container {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 12px;
+        }
+
+        .checkbox {
+            width: 20px;
+            height: 20px;
+            border-radius: 4px;
+            border: 2px solid var(--border-color);
+            background-color: var(--bg-tertiary);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .checkbox.checked {
+            background-color: var(--accent-color);
+            border-color: var(--accent-color);
+        }
+
+        /* Custom Site Input */
+        .custom-site {
+            margin-top: 32px;
+            background-color: var(--bg-secondary);
+            border-radius: var(--radius-md);
+            padding: 24px;
+            border: 1px solid var(--border-color);
+        }
+
+        .custom-site-inputs {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+            margin-bottom: 16px;
+        }
+
+        .custom-site-inputs input {
+            padding: 12px 16px;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-color);
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+        }
+
+        /* Recent Searches */
+        .recent-searches {
+            margin-bottom: 32px;
+        }
+
+        .chips-container {
+            display: flex;
+            gap: 8px;
+            overflow-x: auto;
+            padding: 16px 0;
+            margin-bottom: 16px;
+        }
+
+        .chip {
+            padding: 8px 16px;
+            background-color: var(--bg-tertiary);
+            border-radius: 20px;
+            color: var(--text-secondary);
+            cursor: pointer;
+            white-space: nowrap;
+            transition: var(--transition);
+            border: none;
+            font-family: inherit;
+        }
+
+        .chip:hover {
+            background-color: var(--accent-color);
+            color: white;
+        }
+
+        .history-actions {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        /* Toast */
+        .toast {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            background-color: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            padding: 16px 24px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            box-shadow: 0 4px 12px var(--shadow-color);
+            z-index: 1000;
+            transform: translateY(100px);
+            opacity: 0;
+            transition: transform 0.3s ease, opacity 0.3s ease;
+        }
+
+        .toast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .toast-error {
+            border-left: 4px solid var(--error-color);
+        }
+
+        /* Loading Spinner */
+        .spinner {
+            display: none;
+            width: 24px;
+            height: 24px;
+            border: 3px solid var(--border-color);
+            border-top-color: var(--accent-color);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .loading .spinner {
+            display: block;
+        }
+
+        /* Edit Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal.show {
+            display: flex;
+        }
+
+        .modal-content {
+            background-color: var(--bg-secondary);
+            border-radius: var(--radius-lg);
+            padding: 32px;
+            width: 90%;
+            max-width: 500px;
+            max-height: 90vh;
+            overflow-y: auto;
+            border: 1px solid var(--border-color);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+        }
+
+        .modal-title {
+            font-size: 20px;
+            font-weight: 600;
+        }
+
+        .close-modal {
+            background: none;
+            border: none;
+            color: var(--text-tertiary);
+            cursor: pointer;
+            font-size: 24px;
+            padding: 4px;
+        }
+
+        .modal-form {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .modal-form input {
+            padding: 12px 16px;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-color);
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 12px;
+            margin-top: 24px;
+            justify-content: flex-end;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-top {
+                flex-direction: column;
+                gap: 16px;
+                align-items: stretch;
+            }
+
+            .theme-controls {
+                justify-content: center;
+            }
+
+            .search-actions {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .btn {
+                justify-content: center;
+            }
+
+            .sites-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .custom-site-inputs {
+                grid-template-columns: 1fr;
+            }
+
+            .modal-content {
+                padding: 24px;
+                width: 95%;
+            }
+        }
+
+        /* Utility Classes */
+        .hidden {
+            display: none !important;
+        }
+
+        .fade-out {
+            animation: fadeOut 0.3s ease;
+        }
+
+        @keyframes fadeOut {
+            from { opacity: 1; transform: translateY(0); }
+            to { opacity: 0; transform: translateY(10px); }
+        }
+    </style>
 </head>
-<body class="bg-gray-900 text-white min-h-screen">
-  <div class="container mx-auto px-4 py-8 max-w-6xl">
-    <!-- Header -->
-    <header class="text-center mb-12">
-      <h1 class="text-4xl md:text-5xl font-bold bg-gradient-to-r from-purple-400 via-pink-500 to-indigo-500 bg-clip-text text-transparent">
-        PriceCompare India
-      </h1>
-      <p class="text-gray-400 mt-2">Compare prices across 16+ Indian stores in one click</p>
+<body class="dark-theme">
+    <header>
+        <div class="container">
+            <div class="header-top">
+                <div class="logo">
+                    <div class="logo-icon">
+                        <span class="material-icons-round">search</span>
+                    </div>
+                    <h1>QuickSearch</h1>
+                </div>
+                <div class="theme-controls">
+                    <button class="theme-toggle" id="themeToggle" title="Toggle theme">
+                        <span class="material-icons-round">dark_mode</span>
+                    </button>
+                </div>
+            </div>
+            <div class="search-container">
+                <input type="text" 
+                       class="search-input" 
+                       id="searchInput" 
+                       placeholder="What are you looking for? (e.g., 'CeraVe cleanser')"
+                       autocomplete="off">
+                <button class="clear-search" id="clearSearch">
+                    <span class="material-icons-round">close</span>
+                </button>
+            </div>
+            <div class="search-actions">
+                <button class="btn btn-primary" id="searchBtn">
+                    <span class="material-icons-round">search</span>
+                    Search All Sites
+                    <div class="spinner"></div>
+                </button>
+                <div class="checkbox-container">
+                    <div class="checkbox" id="newWindowCheckbox"></div>
+                    <span>Open in single new window</span>
+                </div>
+                <div class="shortcut-hint">
+                    Press Ctrl+K to focus • Enter to search
+                </div>
+            </div>
+        </div>
     </header>
 
-    <!-- Search Box -->
-    <div class="bg-gray-800 rounded-2xl p-6 shadow-xl backdrop-blur-sm border border-gray-700 mb-10">
-      <div class="flex flex-col md:flex-row gap-4 mb-6">
-        <input
-          type="text"
-          id="searchInput"
-          placeholder="Search products... e.g. CeraVe, ketoconazole shampoo"
-          class="flex-1 px-5 py-4 rounded-xl bg-gray-700 border border-gray-600 focus:outline-none focus:ring-2 focus:ring-purple-500 text-white placeholder-gray-400"
-        />
-        <button
-          id="searchBtn"
-          class="px-6 py-4 bg-gradient-to-r from-purple-600 to-indigo-600 rounded-xl font-semibold shadow-lg hover:from-purple-700 hover:to-indigo-700 transition-all duration-300 flex items-center justify-center gap-2"
-        >
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-            <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd" />
-          </svg>
-          Search
-        </button>
-      </div>
-
-      <!-- Source Selector -->
-      <div class="mb-6">
-        <div class="flex justify-between items-center mb-4">
-          <h2 class="text-xl font-semibold text-purple-300">Select Stores</h2>
-          <div class="flex gap-2">
-            <button id="selectAll" class="text-sm px-3 py-1 bg-gray-700 rounded-lg hover:bg-gray-600 transition">Select All</button>
-            <button id="deselectAll" class="text-sm px-3 py-1 bg-gray-700 rounded-lg hover:bg-gray-600 transition">Clear</button>
-          </div>
+    <main class="container">
+        <!-- Category Tabs -->
+        <div class="category-tabs" id="categoryTabs">
+            <button class="category-tab active" data-category="all">All Sites</button>
+            <!-- Categories will be populated by JavaScript -->
         </div>
 
-        <div id="sourcesGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-          <!-- Sources loaded by JS -->
+        <!-- Selection Controls -->
+        <div class="selection-controls">
+            <button class="btn btn-secondary btn-small" id="selectAllBtn">
+                <span class="material-icons-round">check_box</span>
+                Select All
+            </button>
+            <button class="btn btn-secondary btn-small" id="deselectAllBtn">
+                <span class="material-icons-round">check_box_outline_blank</span>
+                Deselect All
+            </button>
         </div>
-      </div>
+
+        <!-- Sites Grid -->
+        <section class="sites-section">
+            <div class="sites-grid" id="sitesGrid">
+                <!-- Site cards will be populated by JavaScript -->
+            </div>
+        </section>
+
+        <!-- Custom Site Input -->
+        <section class="custom-site">
+            <h3 style="margin-bottom: 16px;">Add Custom Site</h3>
+            <div class="custom-site-inputs">
+                <input type="text" id="customSiteName" placeholder="Site Name">
+                <input type="text" id="customSiteCategory" placeholder="Category (e.g., Electronics)">
+                <input type="text" id="customSiteUrl" placeholder="Search URL (e.g., https://example.com/search?q=)">
+            </div>
+            <button class="btn btn-secondary" id="addCustomSiteBtn">
+                <span class="material-icons-round">add</span>
+                Add Custom Site
+            </button>
+        </section>
+
+        <!-- Recent Searches -->
+        <section class="recent-searches">
+            <h3 style="margin-bottom: 16px;">Recent Searches</h3>
+            <div class="chips-container" id="recentSearches">
+                <!-- Recent search chips will appear here -->
+            </div>
+            <div class="history-actions">
+                <button class="btn btn-secondary" id="clearHistoryBtn">
+                    <span class="material-icons-round">delete_sweep</span>
+                    Clear History
+                </button>
+                <button class="btn btn-secondary" id="downloadHistoryBtn">
+                    <span class="material-icons-round">download</span>
+                    Download History
+                </button>
+                <input type="text" 
+                       id="filterHistory" 
+                       placeholder="Filter history..."
+                       style="flex: 1; min-width: 200px; padding: 0 16px; border-radius: var(--radius-md); border: 1px solid var(--border-color); background-color: var(--bg-primary); color: var(--text-primary);">
+            </div>
+        </section>
+    </main>
+
+    <!-- Edit Modal -->
+    <div class="modal" id="editModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Edit Site</h3>
+                <button class="close-modal" id="closeModal">
+                    <span class="material-icons-round">close</span>
+                </button>
+            </div>
+            <div class="modal-form">
+                <input type="text" id="editSiteName" placeholder="Site Name">
+                <input type="text" id="editSiteCategory" placeholder="Category">
+                <input type="text" id="editSiteUrl" placeholder="Search URL">
+            </div>
+            <div class="modal-actions">
+                <button class="btn btn-secondary" id="cancelEditBtn">Cancel</button>
+                <button class="btn btn-primary" id="saveEditBtn">Save Changes</button>
+            </div>
+        </div>
     </div>
 
-    <!-- Recent Searches -->
-    <div class="bg-gray-800 rounded-2xl p-6 shadow-xl backdrop-blur-sm border border-gray-700">
-      <h2 class="text-xl font-semibold text-purple-300 mb-4 flex items-center gap-2">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-          <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.414L11 9.586V6z" clip-rule="evenodd" />
-        </svg>
-        Recent Searches
-      </h2>
-      <div id="searchHistory" class="flex flex-wrap gap-2">
-        <span class="text-gray-500 italic">No recent searches</span>
-      </div>
-    </div>
+    <!-- Toast Notification -->
+    <div class="toast" id="toast"></div>
 
-    <!-- Toast -->
-    <div id="toast" class="fixed bottom-6 left-1/2 transform -translate-x-1/2 px-6 py-3 bg-gray-800 text-white rounded-full shadow-lg opacity-0 transition-opacity duration-300 pointer-events-none"></div>
-  </div>
+    <script>
+        // ============================================
+        // SITE LIST SECTION - REPLACE THIS SECTION
+        // ============================================
+        // Replace the URLs below with your own working search URLs
+        // Format: { name: "Site Name", category: "Category", url: "https://example.com/search?q=" }
+        // IMPORTANT: Make sure each URL ends with the search parameter placeholder
+        const sites = [
+            { name: "Flipkart", category: "General", url: "https://www.flipkart.com/search?q=", lastUsed: null },
+            { name: "Amazon", category: "General", url: "https://www.amazon.in/s?k=", lastUsed: null },
+            { name: "Wellness Forever", category: "Pharmacy", url: "https://www.wellnessforever.com/search?q=", lastUsed: null },
+            { name: "Noble Plus", category: "General", url: "https://nobleplus.in/?s=", lastUsed: null },
+            { name: "1mg", category: "Pharmacy", url: "https://www.1mg.com/search/all?name=", lastUsed: null },
+            { name: "Nykaa", category: "Beauty", url: "https://www.nykaa.com/search/result/?q=", lastUsed: null },
+            { name: "Apollo Pharmacy", category: "Pharmacy", url: "https://www.apollopharmacy.in/search-medicines/", lastUsed: null },
+            { name: "Pharmeasy", category: "Pharmacy", url: "https://pharmeasy.in/search/all?name=", lastUsed: null },
+            { name: "Netmeds", category: "Pharmacy", url: "https://www.netmeds.com/products?q=", lastUsed: null },
+            { name: "Truemeds", category: "Pharmacy", url: "https://www.truemeds.in/search/", lastUsed: null },
+            { name: "Jiomart", category: "Grocery", url: "https://www.jiomart.com/search/", lastUsed: null },
+            { name: "Zepto", category: "Grocery", url: "https://www.zepto.com/search?query=", lastUsed: null },
+            { name: "Blinkit", category: "Grocery", url: "https://blinkit.com/s/?q=", lastUsed: null },
+            { name: "Swiggy Instamart", category: "Grocery", url: "https://www.swiggy.com/instamart/search?custom_back=true&query=", lastUsed: null },
+            { name: "Dmart", category: "Grocery", url: "https://www.dmart.in/search?searchTerm=", lastUsed: null },
+            { name: "Croma", category: "Electronics", url: "https://www.croma.com/searchB?q=", lastUsed: null }
+        ];
+        // ============================================
+        // END OF SITE LIST SECTION
+        // ============================================
 
-  <script src="script.js"></script>
+        // State Management
+        let state = {
+            selectedSites: new Set(),
+            recentSearches: [],
+            theme: 'dark',
+            currentCategory: 'all',
+            searchHistory: [],
+            editingSiteIndex: -1
+        };
+
+        // DOM Elements
+        const elements = {
+            searchInput: document.getElementById('searchInput'),
+            searchBtn: document.getElementById('searchBtn'),
+            clearSearch: document.getElementById('clearSearch'),
+            newWindowCheckbox: document.getElementById('newWindowCheckbox'),
+            sitesGrid: document.getElementById('sitesGrid'),
+            categoryTabs: document.getElementById('categoryTabs'),
+            recentSearches: document.getElementById('recentSearches'),
+            clearHistoryBtn: document.getElementById('clearHistoryBtn'),
+            downloadHistoryBtn: document.getElementById('downloadHistoryBtn'),
+            filterHistory: document.getElementById('filterHistory'),
+            themeToggle: document.getElementById('themeToggle'),
+            customSiteName: document.getElementById('customSiteName'),
+            customSiteCategory: document.getElementById('customSiteCategory'),
+            customSiteUrl: document.getElementById('customSiteUrl'),
+            addCustomSiteBtn: document.getElementById('addCustomSiteBtn'),
+            selectAllBtn: document.getElementById('selectAllBtn'),
+            deselectAllBtn: document.getElementById('deselectAllBtn'),
+            editModal: document.getElementById('editModal'),
+            editSiteName: document.getElementById('editSiteName'),
+            editSiteCategory: document.getElementById('editSiteCategory'),
+            editSiteUrl: document.getElementById('editSiteUrl'),
+            closeModal: document.getElementById('closeModal'),
+            cancelEditBtn: document.getElementById('cancelEditBtn'),
+            saveEditBtn: document.getElementById('saveEditBtn'),
+            toast: document.getElementById('toast')
+        };
+
+        // Initialize App
+        function init() {
+            loadState();
+            renderSites();
+            renderCategories();
+            renderRecentSearches();
+            setupEventListeners();
+            setupKeyboardShortcuts();
+            elements.searchInput.focus();
+        }
+
+        // Load state from localStorage
+        function loadState() {
+            const saved = localStorage.getItem('quickSearchState');
+            if (saved) {
+                const parsed = JSON.parse(saved);
+                state.selectedSites = new Set(parsed.selectedSites || []);
+                state.recentSearches = parsed.recentSearches || [];
+                state.theme = parsed.theme || 'dark';
+                state.searchHistory = parsed.searchHistory || [];
+                
+                // Update sites with saved data
+                sites.forEach(site => {
+                    const savedSite = parsed.sites?.find(s => s.name === site.name);
+                    if (savedSite) {
+                        site.lastUsed = savedSite.lastUsed;
+                    }
+                });
+                
+                // Add custom sites from storage
+                if (parsed.customSites) {
+                    sites.push(...parsed.customSites);
+                }
+            }
+            
+            // Apply theme
+            document.body.classList.toggle('light-theme', state.theme === 'light');
+            elements.themeToggle.querySelector('.material-icons-round').textContent = 
+                state.theme === 'dark' ? 'dark_mode' : 'light_mode';
+        }
+
+        // Save state to localStorage
+        function saveState() {
+            const stateToSave = {
+                selectedSites: Array.from(state.selectedSites),
+                recentSearches: state.recentSearches,
+                theme: state.theme,
+                searchHistory: state.searchHistory,
+                sites: sites.map(site => ({
+                    name: site.name,
+                    lastUsed: site.lastUsed
+                })),
+                customSites: sites.filter(site => site.custom)
+            };
+            localStorage.setItem('quickSearchState', JSON.stringify(stateToSave));
+        }
+
+        // Render sites grid
+        function renderSites() {
+            elements.sitesGrid.innerHTML = '';
+            
+            let filteredSites = [...sites];
+            
+            // Filter by category
+            if (state.currentCategory !== 'all') {
+                filteredSites = filteredSites.filter(site => 
+                    site.category === state.currentCategory
+                );
+            }
+            
+            // Sort by name
+            filteredSites.sort((a, b) => a.name.localeCompare(b.name));
+            
+            filteredSites.forEach((site, index) => {
+                const card = document.createElement('div');
+                card.className = 'site-card';
+                card.innerHTML = `
+                    <div class="site-card-header">
+                        <div>
+                            <div class="site-name">${site.name}</div>
+                            <div class="site-category">${site.category}</div>
+                        </div>
+                    </div>
+                    <div class="site-url">${site.url}</div>
+                    ${site.lastUsed ? `<div class="last-used">Last used: ${formatTimeAgo(site.lastUsed)}</div>` : ''}
+                    <div class="checkbox-container">
+                        <div class="checkbox ${state.selectedSites.has(site.name) ? 'checked' : ''}" 
+                             data-site="${site.name}">
+                            ${state.selectedSites.has(site.name) ? '<span class="material-icons-round" style="color: white; font-size: 16px;">check</span>' : ''}
+                        </div>
+                        <span>Select for search</span>
+                    </div>
+                    <div class="site-actions">
+                        <button class="action-btn edit-btn" data-index="${index}">
+                            <span class="material-icons-round" style="font-size: 14px;">edit</span>
+                            Edit
+                        </button>
+                        ${site.custom ? `
+                        <button class="action-btn delete delete-btn" data-index="${index}">
+                            <span class="material-icons-round" style="font-size: 14px;">delete</span>
+                            Delete
+                        </button>
+                        ` : ''}
+                    </div>
+                `;
+                elements.sitesGrid.appendChild(card);
+            });
+        }
+
+        // Render category tabs
+        function renderCategories() {
+            const categories = ['all', ...new Set(sites.map(site => site.category))];
+            elements.categoryTabs.innerHTML = categories.map(category => `
+                <button class="category-tab ${state.currentCategory === category ? 'active' : ''}" 
+                        data-category="${category}">
+                    ${category.charAt(0).toUpperCase() + category.slice(1)}
+                </button>
+            `).join('');
+        }
+
+        // Render recent searches
+        function renderRecentSearches(filter = '') {
+            elements.recentSearches.innerHTML = '';
+            
+            let searchesToShow = [...state.recentSearches];
+            
+            if (filter) {
+                searchesToShow = searchesToShow.filter(search =>
+                    search.toLowerCase().includes(filter.toLowerCase())
+                );
+            }
+            
+            searchesToShow.slice(0, 20).forEach(search => {
+                const chip = document.createElement('button');
+                chip.className = 'chip';
+                chip.textContent = search;
+                chip.addEventListener('click', () => {
+                    elements.searchInput.value = search;
+                    elements.searchInput.focus();
+                });
+                elements.recentSearches.appendChild(chip);
+            });
+        }
+
+        // Format time ago
+        function formatTimeAgo(timestamp) {
+            const seconds = Math.floor((Date.now() - timestamp) / 1000);
+            
+            if (seconds < 60) return 'just now';
+            if (seconds < 3600) return `${Math.floor(seconds / 60)} minutes ago`;
+            if (seconds < 86400) return `${Math.floor(seconds / 3600)} hours ago`;
+            return `${Math.floor(seconds / 86400)} days ago`;
+        }
+
+        // Show toast notification
+        function showToast(message, type = 'info') {
+            elements.toast.textContent = message;
+            elements.toast.className = `toast ${type === 'error' ? 'toast-error' : ''}`;
+            elements.toast.classList.add('show');
+            
+            setTimeout(() => {
+                elements.toast.classList.remove('show');
+            }, 3000);
+        }
+
+        // Perform search
+        async function performSearch() {
+            const query = elements.searchInput.value.trim();
+            
+            if (!query) {
+                showToast('Please enter a product name', 'error');
+                return;
+            }
+            
+            const selectedSiteNames = Array.from(state.selectedSites);
+            if (selectedSiteNames.length === 0) {
+                showToast('Please select at least one site', 'error');
+                return;
+            }
+            
+            // Disable button and show loading
+            elements.searchBtn.disabled = true;
+            elements.searchBtn.classList.add('loading');
+            
+            // Add to recent searches
+            if (!state.recentSearches.includes(query)) {
+                state.recentSearches.unshift(query);
+                state.recentSearches = state.recentSearches.slice(0, 20);
+            }
+            
+            // Add to search history
+            state.searchHistory.push({
+                query,
+                timestamp: Date.now(),
+                sites: selectedSiteNames
+            });
+            
+            // Update last used timestamps
+            selectedSiteNames.forEach(siteName => {
+                const site = sites.find(s => s.name === siteName);
+                if (site) {
+                    site.lastUsed = Date.now();
+                }
+            });
+            
+            saveState();
+            renderRecentSearches();
+            
+            // Generate URLs
+            const urls = [];
+            selectedSiteNames.forEach(siteName => {
+                const site = sites.find(s => s.name === siteName);
+                if (site) {
+                    const encodedQuery = encodeURIComponent(query);
+                    // Handle different URL formats
+                    let searchUrl = site.url;
+                    if (searchUrl.includes('?')) {
+                        if (searchUrl.includes('=')) {
+                            // URL already has query parameter
+                            searchUrl += encodedQuery;
+                        } else {
+                            // URL has ? but no = (like Apollo Pharmacy)
+                            searchUrl += encodedQuery;
+                        }
+                    } else {
+                        // URL has no query parameter at all
+                        searchUrl += encodedQuery;
+                    }
+                    urls.push(searchUrl);
+                }
+            });
+            
+            // Open URLs
+            const openInNewWindow = elements.newWindowCheckbox.classList.contains('checked');
+            
+            if (openInNewWindow) {
+                // Open all in one new window
+                const newWindow = window.open('', '_blank');
+                urls.forEach((url, index) => {
+                    if (index === 0) {
+                        newWindow.location.href = url;
+                    } else {
+                        setTimeout(() => {
+                            newWindow.open(url, '_blank');
+                        }, 100 * index);
+                    }
+                });
+            } else {
+                // Open each in new tab
+                urls.forEach(url => {
+                    window.open(url, '_blank');
+                });
+            }
+            
+            // Re-enable button after delay
+            setTimeout(() => {
+                elements.searchBtn.disabled = false;
+                elements.searchBtn.classList.remove('loading');
+                renderSites(); // Update last used times
+            }, 1000);
+        }
+
+        // Add custom site
+        function addCustomSite() {
+            const name = elements.customSiteName.value.trim();
+            const category = elements.customSiteCategory.value.trim();
+            let url = elements.customSiteUrl.value.trim();
+            
+            if (!name || !category || !url) {
+                showToast('Please fill all fields', 'error');
+                return;
+            }
+            
+            if (sites.some(site => site.name === name)) {
+                showToast('Site with this name already exists', 'error');
+                return;
+            }
+            
+            // Ensure URL has proper format
+            if (!url.includes('?')) {
+                url += '?q=';
+            } else if (!url.includes('=')) {
+                url += '=';
+            }
+            
+            const newSite = {
+                name,
+                category,
+                url,
+                lastUsed: null,
+                custom: true
+            };
+            
+            sites.push(newSite);
+            saveState();
+            renderCategories();
+            renderSites();
+            
+            // Clear inputs
+            elements.customSiteName.value = '';
+            elements.customSiteCategory.value = '';
+            elements.customSiteUrl.value = '';
+            
+            showToast('Custom site added successfully!');
+        }
+
+        // Edit site
+        function openEditModal(index) {
+            const site = sites[index];
+            state.editingSiteIndex = index;
+            
+            elements.editSiteName.value = site.name;
+            elements.editSiteCategory.value = site.category;
+            elements.editSiteUrl.value = site.url;
+            
+            elements.editModal.classList.add('show');
+        }
+
+        function saveEdit() {
+            const index = state.editingSiteIndex;
+            if (index === -1) return;
+            
+            const name = elements.editSiteName.value.trim();
+            const category = elements.editSiteCategory.value.trim();
+            let url = elements.editSiteUrl.value.trim();
+            
+            if (!name || !category || !url) {
+                showToast('Please fill all fields', 'error');
+                return;
+            }
+            
+            // Check for duplicate name (excluding current site)
+            const duplicate = sites.find((site, i) => i !== index && site.name === name);
+            if (duplicate) {
+                showToast('Site with this name already exists', 'error');
+                return;
+            }
+            
+            // Ensure URL has proper format
+            if (!url.includes('?')) {
+                url += '?q=';
+            } else if (!url.includes('=')) {
+                url += '=';
+            }
+            
+            // Update the site
+            sites[index].name = name;
+            sites[index].category = category;
+            sites[index].url = url;
+            
+            // Update selected sites if name changed
+            const oldName = sites[index].oldName;
+            if (oldName && state.selectedSites.has(oldName)) {
+                state.selectedSites.delete(oldName);
+                state.selectedSites.add(name);
+            }
+            
+            saveState();
+            renderCategories();
+            renderSites();
+            closeEditModal();
+            
+            showToast('Site updated successfully!');
+        }
+
+        function closeEditModal() {
+            elements.editModal.classList.remove('show');
+            state.editingSiteIndex = -1;
+        }
+
+        // Delete custom site
+        function deleteSite(index) {
+            if (!confirm('Are you sure you want to delete this site?')) return;
+            
+            const site = sites[index];
+            if (state.selectedSites.has(site.name)) {
+                state.selectedSites.delete(site.name);
+            }
+            
+            sites.splice(index, 1);
+            saveState();
+            renderCategories();
+            renderSites();
+            
+            showToast('Site deleted successfully!');
+        }
+
+        // Select all sites
+        function selectAll() {
+            let filteredSites = [...sites];
+            
+            if (state.currentCategory !== 'all') {
+                filteredSites = filteredSites.filter(site => 
+                    site.category === state.currentCategory
+                );
+            }
+            
+            filteredSites.forEach(site => {
+                state.selectedSites.add(site.name);
+            });
+            
+            saveState();
+            renderSites();
+            showToast(`Selected ${filteredSites.length} sites`);
+        }
+
+        // Deselect all sites
+        function deselectAll() {
+            let filteredSites = [...sites];
+            
+            if (state.currentCategory !== 'all') {
+                filteredSites = filteredSites.filter(site => 
+                    site.category === state.currentCategory
+                );
+            }
+            
+            filteredSites.forEach(site => {
+                state.selectedSites.delete(site.name);
+            });
+            
+            saveState();
+            renderSites();
+            showToast(`Deselected ${filteredSites.length} sites`);
+        }
+
+        // Setup event listeners
+        function setupEventListeners() {
+            // Search button
+            elements.searchBtn.addEventListener('click', performSearch);
+            
+            // Clear search button
+            elements.clearSearch.addEventListener('click', () => {
+                elements.searchInput.value = '';
+                elements.searchInput.focus();
+                elements.clearSearch.style.display = 'none';
+            });
+            
+            // Search input events
+            elements.searchInput.addEventListener('input', (e) => {
+                elements.clearSearch.style.display = e.target.value ? 'block' : 'none';
+            });
+            
+            elements.searchInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    performSearch();
+                }
+            });
+            
+            // New window checkbox
+            elements.newWindowCheckbox.addEventListener('click', () => {
+                elements.newWindowCheckbox.classList.toggle('checked');
+            });
+            
+            // Sites grid (event delegation)
+            elements.sitesGrid.addEventListener('click', (e) => {
+                // Checkbox selection
+                const checkbox = e.target.closest('.checkbox');
+                if (checkbox) {
+                    const siteName = checkbox.dataset.site;
+                    if (state.selectedSites.has(siteName)) {
+                        state.selectedSites.delete(siteName);
+                    } else {
+                        state.selectedSites.add(siteName);
+                    }
+                    checkbox.classList.toggle('checked');
+                    saveState();
+                    return;
+                }
+                
+                // Edit button
+                const editBtn = e.target.closest('.edit-btn');
+                if (editBtn) {
+                    const index = parseInt(editBtn.dataset.index);
+                    openEditModal(index);
+                    return;
+                }
+                
+                // Delete button
+                const deleteBtn = e.target.closest('.delete-btn');
+                if (deleteBtn) {
+                    const index = parseInt(deleteBtn.dataset.index);
+                    deleteSite(index);
+                    return;
+                }
+            });
+            
+            // Category tabs
+            elements.categoryTabs.addEventListener('click', (e) => {
+                const tab = e.target.closest('.category-tab');
+                if (tab) {
+                    document.querySelectorAll('.category-tab').forEach(t => 
+                        t.classList.remove('active')
+                    );
+                    tab.classList.add('active');
+                    state.currentCategory = tab.dataset.category;
+                    renderSites();
+                }
+            });
+            
+            // Select all button
+            elements.selectAllBtn.addEventListener('click', selectAll);
+            
+            // Deselect all button
+            elements.deselectAllBtn.addEventListener('click', deselectAll);
+            
+            // Clear history
+            elements.clearHistoryBtn.addEventListener('click', () => {
+                if (confirm('Clear all search history?')) {
+                    state.recentSearches = [];
+                    state.searchHistory = [];
+                    saveState();
+                    renderRecentSearches();
+                    showToast('History cleared');
+                }
+            });
+            
+            // Download history
+            elements.downloadHistoryBtn.addEventListener('click', () => {
+                const historyText = state.searchHistory.map(entry => 
+                    `${new Date(entry.timestamp).toLocaleString()}: "${entry.query}" on ${entry.sites.join(', ')}`
+                ).join('\n');
+                
+                const blob = new Blob([historyText], { type: 'text/plain' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `search-history-${new Date().toISOString().split('T')[0]}.txt`;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+                
+                showToast('History downloaded');
+            });
+            
+            // Filter history
+            elements.filterHistory.addEventListener('input', (e) => {
+                renderRecentSearches(e.target.value);
+            });
+            
+            // Theme toggle
+            elements.themeToggle.addEventListener('click', () => {
+                state.theme = state.theme === 'dark' ? 'light' : 'dark';
+                document.body.classList.toggle('light-theme', state.theme === 'light');
+                elements.themeToggle.querySelector('.material-icons-round').textContent = 
+                    state.theme === 'dark' ? 'dark_mode' : 'light_mode';
+                saveState();
+            });
+            
+            // Add custom site
+            elements.addCustomSiteBtn.addEventListener('click', addCustomSite);
+            
+            // Allow Enter key in custom site inputs
+            [elements.customSiteName, elements.customSiteCategory, elements.customSiteUrl].forEach(input => {
+                input.addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter') {
+                        addCustomSite();
+                    }
+                });
+            });
+            
+            // Edit modal
+            elements.closeModal.addEventListener('click', closeEditModal);
+            elements.cancelEditBtn.addEventListener('click', closeEditModal);
+            elements.saveEditBtn.addEventListener('click', saveEdit);
+            
+            // Close modal on backdrop click
+            elements.editModal.addEventListener('click', (e) => {
+                if (e.target === elements.editModal) {
+                    closeEditModal();
+                }
+            });
+        }
+
+        // Setup keyboard shortcuts
+        function setupKeyboardShortcuts() {
+            document.addEventListener('keydown', (e) => {
+                // Ctrl+K to focus search
+                if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+                    e.preventDefault();
+                    elements.searchInput.focus();
+                }
+                
+                // Escape to clear search or close modal
+                if (e.key === 'Escape') {
+                    if (document.activeElement === elements.searchInput) {
+                        elements.searchInput.value = '';
+                    } else if (elements.editModal.classList.contains('show')) {
+                        closeEditModal();
+                    }
+                }
+            });
+        }
+
+        // Initialize when DOM is loaded
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
 </body>
 </html>

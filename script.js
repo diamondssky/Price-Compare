@@ -1,397 +1,152 @@
-document.addEventListener('DOMContentLoaded', function() {
-    // All Indian e-commerce sites with EXACT URLs as provided
-    const SOURCES = [
-        { 
-            name: "Flipkart", 
-            category: "General Shopping", 
-            url: "https://www.flipkart.com/search?q=", 
-            icon: "F",
-            color: "#2874F0"
-        },
-        { 
-            name: "Amazon India", 
-            category: "General Shopping", 
-            url: "https://www.amazon.in/s?k=", 
-            icon: "A",
-            color: "#FF9900"
-        },
-        { 
-            name: "Wellness Forever", 
-            category: "Pharmacy", 
-            url: "https://www.wellnessforever.com/search?q=", 
-            icon: "WF",
-            color: "#009639"
-        },
-        { 
-            name: "Noble Plus", 
-            category: "General Shopping", 
-            url: "https://nobleplus.in/?s=", 
-            icon: "NP",
-            color: "#E71D36"
-        },
-        { 
-            name: "1mg", 
-            category: "Pharmacy", 
-            url: "https://www.1mg.com/search/all?name=", 
-            icon: "1mg",
-            color: "#4A90E2"
-        },
-        { 
-            name: "Nykaa", 
-            category: "Beauty & Cosmetics", 
-            url: "https://www.nykaa.com/search/result/?q=", 
-            icon: "N",
-            color: "#BF0054"
-        },
-        { 
-            name: "Apollo Pharmacy", 
-            category: "Pharmacy", 
-            url: "https://www.apollopharmacy.in/search-medicines/", 
-            icon: "AP",
-            color: "#0047AB"
-        },
-        { 
-            name: "PharmEasy", 
-            category: "Pharmacy", 
-            url: "https://pharmeasy.in/search/all?name=", 
-            icon: "PE",
-            color: "#00C896"
-        },
-        { 
-            name: "Netmeds", 
-            category: "Pharmacy", 
-            url: "https://www.netmeds.com/products?q=", 
-            icon: "NM",
-            color: "#009639"
-        },
-        { 
-            name: "Truemeds", 
-            category: "Pharmacy", 
-            url: "https://www.truemeds.in/search/", 
-            icon: "TM",
-            color: "#2196F3"
-        },
-        { 
-            name: "JioMart", 
-            category: "General Shopping", 
-            url: "https://www.jiomart.com/search/", 
-            icon: "JM",
-            color: "#0078D7"
-        },
-        { 
-            name: "Zepto", 
-            category: "Grocery", 
-            url: "https://www.zepto.com/search?query=", 
-            icon: "Z",
-            color: "#B8002C"
-        },
-        { 
-            name: "Blinkit", 
-            category: "Grocery", 
-            url: "https://blinkit.com/s/?q=", 
-            icon: "B",
-            color: "#31AD2E"
-        },
-        { 
-            name: "Swiggy Instamart", 
-            category: "Grocery", 
-            url: "https://www.swiggy.com/instamart/search?custom_back=true&query=", 
-            icon: "SI",
-            color: "#F56C4E"
-        },
-        { 
-            name: "DMart", 
-            category: "General Shopping", 
-            url: "https://www.dmart.in/search?searchTerm=", 
-            icon: "D",
-            color: "#8B572A"
-        },
-        { 
-            name: "Croma", 
-            category: "Electronics", 
-            url: "https://www.croma.com/searchB?q=", 
-            icon: "C",
-            color: "#0047AB"
-        }
-    ];
+document.addEventListener('DOMContentLoaded', () => {
+  // EXACT URLs as provided – no modifications
+  const SOURCES = [
+    { name: "Flipkart", cat: "🛒 General", url: "https://www.flipkart.com/search?q=", color: "#2874F0" },
+    { name: "Amazon India", cat: "🛒 General", url: "https://www.amazon.in/s?k=", color: "#FF9900" },
+    { name: "Wellness Forever", cat: "💊 Pharmacy", url: "https://www.wellnessforever.com/search?q=", color: "#10B981" },
+    { name: "Noble Plus", cat: "🛒 General", url: "https://nobleplus.in/?s=", color: "#EF4444" },
+    { name: "1mg", cat: "💊 Pharmacy", url: "https://www.1mg.com/search/all?name=", color: "#3B82F6" },
+    { name: "Nykaa", cat: "💄 Beauty", url: "https://www.nykaa.com/search/result/?q=", color: "#EC4899" },
+    { name: "Apollo Pharmacy", cat: "💊 Pharmacy", url: "https://www.apollopharmacy.in/search-medicines/", color: "#0EA5E9" },
+    { name: "PharmEasy", cat: "💊 Pharmacy", url: "https://pharmeasy.in/search/all?name=", color: "#00C896" },
+    { name: "Netmeds", cat: "💊 Pharmacy", url: "https://www.netmeds.com/products?q=", color: "#10B981" },
+    { name: "Truemeds", cat: "💊 Pharmacy", url: "https://www.truemeds.in/search/", color: "#8B5CF6" },
+    { name: "JioMart", cat: "🛒 General", url: "https://www.jiomart.com/search/", color: "#0078D7" },
+    { name: "Zepto", cat: "🥦 Grocery", url: "https://www.zepto.com/search?query=", color: "#B8002C" },
+    { name: "Blinkit", cat: "🥦 Grocery", url: "https://blinkit.com/s/?q=", color: "#31AD2E" },
+    { name: "Swiggy Instamart", cat: "🥦 Grocery", url: "https://www.swiggy.com/instamart/search?custom_back=true&query=", color: "#F56C4E" },
+    { name: "DMart", cat: "🛒 General", url: "https://www.dmart.in/search?searchTerm=", color: "#8B572A" },
+    { name: "Croma", cat: "📱 Electronics", url: "https://www.croma.com/searchB?q=", color: "#0047AB" }
+  ];
 
-    // DOM Elements
-    const sourcesGrid = document.getElementById('sources-grid');
-    const searchInput = document.getElementById('search-input');
-    const searchBtn = document.getElementById('search-btn');
-    const selectAllBtn = document.getElementById('select-all');
-    const deselectAllBtn = document.getElementById('deselect-all');
-    const searchHistory = document.getElementById('search-history');
-    const toast = document.getElementById('toast');
+  const sourcesGrid = document.getElementById('sourcesGrid');
+  const searchInput = document.getElementById('searchInput');
+  const searchBtn = document.getElementById('searchBtn');
+  const selectAllBtn = document.getElementById('selectAll');
+  const deselectAllBtn = document.getElementById('deselectAll');
+  const historyEl = document.getElementById('searchHistory');
+  const toast = document.getElementById('toast');
 
-    // Selected sources storage
-    let selectedSources = new Set();
-    const MAX_HISTORY_ITEMS = 8;
+  let selected = new Set();
 
-    // Initialize the app
-    function initApp() {
-        renderSources();
-        loadSearchHistory();
-        setupEventListeners();
-        preselectPopularSources();
-    }
+  // Render sources
+  function renderSources() {
+    sourcesGrid.innerHTML = '';
+    SOURCES.forEach(site => {
+      const card = document.createElement('div');
+      card.className = 'source-card';
+      if (['Amazon India', 'Flipkart', 'Nykaa', 'PharmEasy', '1mg', 'Wellness Forever'].includes(site.name)) {
+        selected.add(site.name);
+        card.classList.add('selected');
+      }
 
-    // Render all source cards with proper icons
-    function renderSources() {
-        sourcesGrid.innerHTML = '';
-        
-        SOURCES.forEach((source, index) => {
-            const card = document.createElement('div');
-            card.className = 'source-card';
-            card.dataset.name = source.name;
-            card.style.setProperty('--i', index);
-            
-            card.innerHTML = `
-                <div class="source-icon" style="background: linear-gradient(45deg, ${source.color}, ${shadeColor(source.color, -20)});">
-                    ${source.icon}
-                </div>
-                <div class="source-info">
-                    <div class="source-name">${source.name}</div>
-                    <div class="source-category">${source.category}</div>
-                </div>
-                <div class="checkbox-wrapper">
-                    <div class="custom-checkbox"></div>
-                </div>
-            `;
-            
-            card.addEventListener('click', () => toggleSource(source.name, card));
-            sourcesGrid.appendChild(card);
-        });
-    }
+      card.innerHTML = `
+        <div class="source-icon" style="background: linear-gradient(135deg, ${site.color}, ${darkenColor(site.color, 20)})">
+          ${getInitials(site.name)}
+        </div>
+        <div class="source-info">
+          <div class="source-name">${site.name}</div>
+          <div class="source-category">${site.cat}</div>
+        </div>
+        <div class="checkbox ${selected.has(site.name) ? 'checked' : ''}"></div>
+      `;
 
-    // Toggle source selection
-    function toggleSource(sourceName, card) {
-        const checkbox = card.querySelector('.custom-checkbox');
-        const isSelected = selectedSources.has(sourceName);
-        
+      card.addEventListener('click', () => {
+        const isSelected = selected.has(site.name);
         if (isSelected) {
-            selectedSources.delete(sourceName);
-            checkbox.classList.remove('checked');
-            card.classList.remove('selected');
+          selected.delete(site.name);
+          card.classList.remove('selected');
+          card.querySelector('.checkbox').classList.remove('checked');
         } else {
-            selectedSources.add(sourceName);
-            checkbox.classList.add('checked');
-            card.classList.add('selected');
+          selected.add(site.name);
+          card.classList.add('selected');
+          card.querySelector('.checkbox').classList.add('checked');
         }
-    }
+      });
 
-    // Select/Deselect all sources
-    function selectAllSources() {
-        selectedSources.clear();
-        SOURCES.forEach(source => selectedSources.add(source.name));
-        document.querySelectorAll('.source-card').forEach(card => {
-            const checkbox = card.querySelector('.custom-checkbox');
-            checkbox.classList.add('checked');
-            card.classList.add('selected');
-        });
-        showToast('✅ All sources selected!', 'success');
-    }
+      sourcesGrid.appendChild(card);
+    });
+  }
 
-    function deselectAllSources() {
-        selectedSources.clear();
-        document.querySelectorAll('.source-card').forEach(card => {
-            const checkbox = card.querySelector('.custom-checkbox');
-            checkbox.classList.remove('checked');
-            card.classList.remove('selected');
-        });
-        showToast('❌ All sources deselected!', 'info');
-    }
+  function getInitials(name) {
+    if (name === '1mg') return '1mg';
+    if (name === 'Swiggy Instamart') return 'SI';
+    if (name === 'Apollo Pharmacy') return 'AP';
+    return name.split(' ').map(w => w[0]).join('').substring(0, 2).toUpperCase();
+  }
 
-    // Preselect popular sources
-    function preselectPopularSources() {
-        const popularSources = ['Amazon India', 'Flipkart', 'Nykaa', 'PharmEasy', '1mg', 'Wellness Forever'];
-        document.querySelectorAll('.source-card').forEach(card => {
-            const sourceName = card.dataset.name;
-            if (popularSources.includes(sourceName)) {
-                const checkbox = card.querySelector('.custom-checkbox');
-                checkbox.classList.add('checked');
-                card.classList.add('selected');
-                selectedSources.add(sourceName);
-            }
-        });
-    }
+  function darkenColor(hex, percent) {
+    let r = parseInt(hex.slice(1, 3), 16);
+    let g = parseInt(hex.slice(3, 5), 16);
+    let b = parseInt(hex.slice(5, 7), 16);
+    r = Math.max(0, r - (255 * percent / 100));
+    g = Math.max(0, g - (255 * percent / 100));
+    b = Math.max(0, b - (255 * percent / 100));
+    return `#${Math.round(r).toString(16).padStart(2, '0')}${Math.round(g).toString(16).padStart(2, '0')}${Math.round(b).toString(16).padStart(2, '0')}`;
+  }
 
-    // Perform search and open tabs - FIXED VERSION
-    function performSearch() {
-        const query = searchInput.value.trim();
-        
-        if (!query) {
-            showToast('⚠️ Please enter a search term!', 'error');
-            return;
+  // Search logic
+  function performSearch() {
+    const query = searchInput.value.trim();
+    if (!query) return showToast('Enter a product name');
+
+    if (selected.size === 0) return showToast('Select at least one store');
+
+    // Save to history
+    let history = JSON.parse(localStorage.getItem('priceHistory') || '[]');
+    history = [query, ...history.filter(h => h !== query)].slice(0, 8);
+    localStorage.setItem('priceHistory', JSON.stringify(history));
+    updateHistory();
+
+    // Open tabs
+    showToast(`Opening ${selected.size} tabs...`);
+    setTimeout(() => {
+      selected.forEach(siteName => {
+        const site = SOURCES.find(s => s.name === siteName);
+        if (site) {
+          const url = site.url + encodeURIComponent(query);
+          window.open(url, '_blank');
         }
+      });
+    }, 300);
+  }
 
-        if (selectedSources.size === 0) {
-            showToast('⚠️ Please select at least one source!', 'error');
-            return;
-        }
-
-        // Save to history
-        saveToHistory(query);
-
-        // Create URLs array
-        const urlsToOpen = [];
-        selectedSources.forEach(sourceName => {
-            const source = SOURCES.find(s => s.name === sourceName);
-            if (source) {
-                const encodedQuery = encodeURIComponent(query);
-                const url = `${source.url}${encodedQuery}`;
-                urlsToOpen.push({ url, name: source.name });
-            }
-        });
-
-        showToast(`🚀 Opening ${urlsToOpen.length} tabs for "${query}"...`, 'success');
-
-        // Open tabs with user confirmation for multiple tabs
-        if (urlsToOpen.length > 1) {
-            const confirmed = confirm(`This will open ${urlsToOpen.length} new tabs. Continue?`);
-            if (confirmed) {
-                openTabsWithDelay(urlsToOpen);
-            }
-        } else {
-            window.open(urlsToOpen[0].url, '_blank');
-        }
-
-        // Clear search after opening tabs
-        setTimeout(() => {
-            searchInput.value = '';
-            searchInput.focus();
-        }, 1000);
+  function updateHistory() {
+    const history = JSON.parse(localStorage.getItem('priceHistory') || '[]');
+    if (history.length === 0) {
+      historyEl.innerHTML = '<span class="text-gray-500 italic">No recent searches</span>';
+      return;
     }
+    historyEl.innerHTML = history.map(q =>
+      `<span class="px-3 py-1.5 bg-gray-700 rounded-lg cursor-pointer hover:bg-gray-600 transition">${q}</span>`
+    ).join(' ');
+    historyEl.querySelectorAll('span').forEach(span => {
+      span.addEventListener('click', () => {
+        searchInput.value = span.textContent;
+        performSearch();
+      });
+    });
+  }
 
-    // Open tabs with delay to avoid browser blocking
-    function openTabsWithDelay(urls) {
-        let index = 0;
-        
-        function openNextTab() {
-            if (index >= urls.length) return;
-            
-            const currentUrl = urls[index];
-            const newTab = window.open(currentUrl.url, '_blank');
-            
-            if (newTab) {
-                index++;
-                setTimeout(openNextTab, 500);
-            } else {
-                if (index === 0) {
-                    alert('⚠️ Pop-ups are blocked! Please allow pop-ups for this site and try again.');
-                }
-            }
-        }
-        
-        openNextTab();
-    }
+  function showToast(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 3000);
+  }
 
-    // History management
-    function saveToHistory(query) {
-        let history = JSON.parse(localStorage.getItem('pricehop_history') || '[]');
-        
-        // Remove if already exists
-        history = history.filter(item => item !== query);
-        
-        // Add to beginning
-        history.unshift(query);
-        
-        // Limit history size
-        if (history.length > MAX_HISTORY_ITEMS) {
-            history = history.slice(0, MAX_HISTORY_ITEMS);
-        }
-        
-        localStorage.setItem('pricehop_history', JSON.stringify(history));
-        updateHistoryDisplay();
-    }
+  // Event listeners
+  searchBtn.addEventListener('click', performSearch);
+  searchInput.addEventListener('keypress', (e) => e.key === 'Enter' && performSearch());
+  selectAllBtn.addEventListener('click', () => {
+    selected = new Set(SOURCES.map(s => s.name));
+    renderSources();
+  });
+  deselectAllBtn.addEventListener('click', () => {
+    selected.clear();
+    renderSources();
+  });
 
-    function loadSearchHistory() {
-        updateHistoryDisplay();
-    }
-
-    function updateHistoryDisplay() {
-        const history = JSON.parse(localStorage.getItem('pricehop_history') || '[]');
-        searchHistory.innerHTML = '';
-        
-        if (history.length === 0) {
-            searchHistory.innerHTML = '<div style="color: #a0a0c0; font-style: italic;">No recent searches yet</div>';
-            return;
-        }
-        
-        history.forEach(query => {
-            const item = document.createElement('div');
-            item.className = 'history-item';
-            item.textContent = query;
-            item.title = `Search for "${query}"`;
-            
-            item.addEventListener('click', () => {
-                searchInput.value = query;
-                searchInput.focus();
-                performSearch();
-            });
-            
-            searchHistory.appendChild(item);
-        });
-    }
-
-    // Toast notifications
-    function showToast(message, type = 'info') {
-        toast.textContent = message;
-        
-        // Set color based on type
-        const colors = {
-            success: 'linear-gradient(45deg, #4CAF50, #45a049)',
-            error: 'linear-gradient(45deg, #f44336, #da190b)',
-            info: 'linear-gradient(45deg, #2196F3, #1976D2)'
-        };
-        
-        toast.style.background = colors[type] || colors.info;
-        toast.style.borderColor = '#2196F3';
-        
-        toast.classList.add('show');
-        
-        setTimeout(() => {
-            toast.classList.remove('show');
-        }, 3000);
-    }
-
-    // Utility function to shade color
-    function shadeColor(color, percent) {
-        if (!color.startsWith('#')) return color;
-        
-        let R = parseInt(color.substring(1, 3), 16);
-        let G = parseInt(color.substring(3, 5), 16);
-        let B = parseInt(color.substring(5, 7), 16);
-        
-        R = parseInt(R * (100 + percent) / 100);
-        G = parseInt(G * (100 + percent) / 100);
-        B = parseInt(B * (100 + percent) / 100);
-        
-        R = (R < 255) ? R : 255;
-        G = (G < 255) ? G : 255;
-        B = (B < 255) ? B : 255;
-        
-        R = Math.max(0, R).toString(16).padStart(2, '0');
-        G = Math.max(0, G).toString(16).padStart(2, '0');
-        B = Math.max(0, B).toString(16).padStart(2, '0');
-        
-        return `#${R}${G}${B}`;
-    }
-
-    // Setup event listeners
-    function setupEventListeners() {
-        searchBtn.addEventListener('click', performSearch);
-        
-        searchInput.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') {
-                performSearch();
-            }
-        });
-        
-        selectAllBtn.addEventListener('click', selectAllSources);
-        deselectAllBtn.addEventListener('click', deselectAllSources);
-    }
-
-    // Initialize the app
-    initApp();
+  // Init
+  renderSources();
+  updateHistory();
 });

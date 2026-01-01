@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PriceCompare • Find Best Prices Online</title>
+    <title>Compare It! • Find Best Prices Online</title>
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -14,16 +14,17 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            /* Default dark theme */
-            --bg-primary: #0f172a;
-            --bg-secondary: #1e293b;
-            --bg-tertiary: #334155;
-            --text-primary: #f8fafc;
-            --text-secondary: #cbd5e1;
-            --text-tertiary: #94a3b8;
-            --border-color: #475569;
-            --shadow-color: rgba(0, 0, 0, 0.3);
-            --accent-color: #3b82f6;
+            /* Teal theme with AMOLED black */
+            --bg-primary: #000000;
+            --bg-secondary: #0a0a0a;
+            --bg-tertiary: #111111;
+            --text-primary: #ffffff;
+            --text-secondary: #d4d4d4;
+            --text-tertiary: #a3a3a3;
+            --border-color: #262626;
+            --shadow-color: rgba(0, 0, 0, 0.5);
+            --accent-color: #0d9488;
+            --accent-gradient: linear-gradient(135deg, #0d9488 0%, #0f766e 100%);
             --success-color: #10b981;
             --warning-color: #f59e0b;
             --error-color: #ef4444;
@@ -37,11 +38,13 @@
             --bg-primary: #ffffff;
             --bg-secondary: #f8fafc;
             --bg-tertiary: #f1f5f9;
-            --text-primary: #0f172a;
-            --text-secondary: #475569;
-            --text-tertiary: #64748b;
-            --border-color: #e2e8f0;
+            --text-primary: #000000;
+            --text-secondary: #374151;
+            --text-tertiary: #6b7280;
+            --border-color: #e5e7eb;
             --shadow-color: rgba(0, 0, 0, 0.1);
+            --accent-color: #0d9488;
+            --accent-gradient: linear-gradient(135deg, #0d9488 0%, #0f766e 100%);
         }
 
         * {
@@ -68,10 +71,10 @@
         /* Header */
         header {
             padding: 24px 0;
-            background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+            background: linear-gradient(135deg, #0d9488 0%, #0f766e 100%);
             color: white;
             margin-bottom: 32px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
         }
 
         .header-content {
@@ -104,7 +107,7 @@
             font-size: 28px;
             font-weight: 700;
             margin-bottom: 4px;
-            background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+            background: linear-gradient(135deg, #ffffff 0%, #f0fdfa 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
@@ -133,7 +136,7 @@
         .theme-toggle:hover {
             transform: translateY(-2px);
             background-color: rgba(255, 255, 255, 0.3);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
         }
 
         /* Search Section */
@@ -152,7 +155,7 @@
             font-size: 18px;
             border: 2px solid transparent;
             border-radius: var(--radius-lg);
-            background: linear-gradient(135deg, var(--bg-secondary) 0%, color-mix(in srgb, var(--bg-secondary) 90%, black) 100%);
+            background: var(--bg-secondary);
             color: var(--text-primary);
             transition: var(--transition);
             box-shadow: 0 4px 20px var(--shadow-color);
@@ -161,7 +164,7 @@
         .search-input:focus {
             outline: none;
             border-color: var(--accent-color);
-            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.2);
+            box-shadow: 0 0 0 4px rgba(13, 148, 136, 0.2);
             transform: translateY(-2px);
         }
 
@@ -205,17 +208,17 @@
         }
 
         .btn-primary {
-            background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+            background: var(--accent-gradient);
             color: white;
         }
 
         .btn-primary:hover:not(:disabled) {
             transform: translateY(-3px);
-            box-shadow: 0 8px 24px rgba(59, 130, 246, 0.4);
+            box-shadow: 0 8px 24px rgba(13, 148, 136, 0.4);
         }
 
         .btn-secondary {
-            background: linear-gradient(135deg, var(--bg-tertiary) 0%, color-mix(in srgb, var(--bg-tertiary) 90%, black) 100%);
+            background: var(--bg-tertiary);
             color: var(--text-primary);
             border: 1px solid var(--border-color);
         }
@@ -253,7 +256,7 @@
 
         .category-tab {
             padding: 12px 24px;
-            background: linear-gradient(135deg, var(--bg-tertiary) 0%, color-mix(in srgb, var(--bg-tertiary) 90%, black) 100%);
+            background: var(--bg-tertiary);
             border-radius: var(--radius-lg);
             border: none;
             color: var(--text-secondary);
@@ -272,7 +275,7 @@
         }
 
         .category-tab.active {
-            background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+            background: var(--accent-gradient);
             color: white;
         }
 
@@ -297,7 +300,7 @@
         }
 
         .site-card {
-            background: linear-gradient(135deg, var(--bg-secondary) 0%, color-mix(in srgb, var(--bg-secondary) 90%, black) 100%);
+            background: var(--bg-secondary);
             border: 1px solid var(--border-color);
             border-radius: var(--radius-lg);
             padding: 24px;
@@ -308,6 +311,7 @@
             box-shadow: 0 4px 20px var(--shadow-color);
             display: flex;
             flex-direction: column;
+            cursor: pointer;
         }
 
         .site-card::before {
@@ -317,15 +321,15 @@
             left: 0;
             right: 0;
             height: 4px;
-            background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+            background: var(--accent-gradient);
             transform: scaleX(0);
             transition: transform 0.3s ease;
         }
 
         .site-card.selected {
             transform: translateY(-5px);
-            box-shadow: 0 12px 32px rgba(59, 130, 246, 0.3);
-            border-color: #3b82f6;
+            box-shadow: 0 12px 32px rgba(13, 148, 136, 0.3);
+            border-color: var(--accent-color);
         }
 
         .site-card.selected::before {
@@ -334,7 +338,8 @@
 
         .site-card:hover {
             transform: translateY(-3px);
-            box-shadow: 0 8px 28px var(--shadow-color);
+            box-shadow: 0 8px 28px rgba(0, 0, 0, 0.6);
+            border-color: var(--accent-color);
         }
 
         .site-card.selected:hover {
@@ -350,7 +355,7 @@
             display: flex;
             align-items: center;
             gap: 16px;
-            margin-bottom: 20px;
+            margin-bottom: 16px;
         }
 
         .site-icon {
@@ -363,7 +368,7 @@
             font-size: 24px;
             color: white;
             flex-shrink: 0;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
             transition: transform 0.3s ease;
         }
 
@@ -388,24 +393,13 @@
             display: inline-block;
         }
 
-        /* Edit button moved to bottom left */
-        .site-card-footer {
-            margin-top: auto;
+        /* Edit button at bottom */
+        .site-card-actions {
             display: flex;
             justify-content: space-between;
             align-items: center;
+            margin-top: auto;
             padding-top: 16px;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .site-url {
-            font-size: 12px;
-            color: var(--text-tertiary);
-            font-family: monospace;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-            flex: 1;
         }
 
         .edit-btn {
@@ -421,7 +415,6 @@
             justify-content: center;
             transition: var(--transition);
             flex-shrink: 0;
-            margin-left: 12px;
         }
 
         .edit-btn:hover {
@@ -454,7 +447,7 @@
         /* Custom Site Input */
         .custom-site {
             margin-top: 40px;
-            background: linear-gradient(135deg, var(--bg-secondary) 0%, color-mix(in srgb, var(--bg-secondary) 90%, black) 100%);
+            background: var(--bg-secondary);
             border-radius: var(--radius-lg);
             padding: 32px;
             border: 1px solid var(--border-color);
@@ -466,7 +459,7 @@
             margin-bottom: 20px;
             color: var(--text-primary);
             font-weight: 700;
-            background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+            background: var(--accent-gradient);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
@@ -491,7 +484,7 @@
         .custom-site-inputs input:focus {
             outline: none;
             border-color: var(--accent-color);
-            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+            box-shadow: 0 0 0 3px rgba(13, 148, 136, 0.1);
             transform: translateY(-2px);
         }
 
@@ -517,7 +510,7 @@
 
         .chip {
             padding: 12px 24px;
-            background: linear-gradient(135deg, var(--bg-tertiary) 0%, color-mix(in srgb, var(--bg-tertiary) 90%, black) 100%);
+            background: var(--bg-tertiary);
             border-radius: 30px;
             color: var(--text-secondary);
             cursor: pointer;
@@ -531,10 +524,10 @@
         }
 
         .chip:hover {
-            background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+            background: var(--accent-gradient);
             color: white;
             transform: translateY(-2px);
-            box-shadow: 0 4px 16px rgba(59, 130, 246, 0.4);
+            box-shadow: 0 4px 16px rgba(13, 148, 136, 0.4);
         }
 
         .history-actions {
@@ -548,7 +541,7 @@
             position: fixed;
             bottom: 32px;
             right: 32px;
-            background: linear-gradient(135deg, var(--bg-secondary) 0%, color-mix(in srgb, var(--bg-secondary) 90%, black) 100%);
+            background: var(--bg-secondary);
             border: 1px solid var(--border-color);
             border-radius: var(--radius-lg);
             padding: 20px 32px;
@@ -600,7 +593,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.7);
+            background-color: rgba(0, 0, 0, 0.8);
             backdrop-filter: blur(8px);
             z-index: 1000;
             align-items: center;
@@ -613,13 +606,13 @@
         }
 
         .modal-content {
-            background: linear-gradient(135deg, var(--bg-secondary) 0%, color-mix(in srgb, var(--bg-secondary) 90%, black) 100%);
+            background: var(--bg-secondary);
             border-radius: var(--radius-lg);
             padding: 40px;
             width: 90%;
             max-width: 500px;
             border: 1px solid var(--border-color);
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
             animation: slideUp 0.4s ease;
         }
 
@@ -638,7 +631,7 @@
         .modal-title {
             font-size: 24px;
             font-weight: 700;
-            background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+            background: var(--accent-gradient);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
@@ -677,14 +670,14 @@
         .modal-form input:focus {
             outline: none;
             border-color: var(--accent-color);
-            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+            box-shadow: 0 0 0 3px rgba(13, 148, 136, 0.1);
         }
 
         .modal-actions {
             display: flex;
             gap: 16px;
             margin-top: 32px;
-            justify-content: flex-end;
+            justify-content: space-between;
         }
 
         /* Responsive */
@@ -724,7 +717,7 @@
                 width: 95%;
             }
 
-            .site-card-footer {
+            .site-card-actions {
                 flex-direction: column;
                 align-items: flex-start;
                 gap: 12px;
@@ -732,6 +725,10 @@
 
             .edit-btn {
                 align-self: flex-start;
+            }
+
+            .modal-actions {
+                flex-direction: column;
             }
         }
 
@@ -764,8 +761,8 @@
                         <span class="material-icons-round">compare_arrows</span>
                     </div>
                     <div class="logo-text">
-                        <h1>Select Sources</h1>
-                        <p>Compare prices across top online stores in India</p>
+                        <h1>Compare It!</h1>
+                        <p>Find the best prices across all online stores</p>
                     </div>
                 </div>
                 <button class="theme-toggle" id="themeToggle" title="Toggle theme">
@@ -858,7 +855,7 @@
                        id="filterHistory" 
                        placeholder="Filter history..."
                        style="flex: 1; min-width: 200px; padding: 0 20px; border-radius: var(--radius-md); border: 2px solid var(--border-color); background: var(--bg-primary); color: var(--text-primary); font-size: 15px; transition: var(--transition);"
-                       onfocus="this.style.borderColor='var(--accent-color)'; this.style.boxShadow='0 0 0 3px rgba(59, 130, 246, 0.1)'"
+                       onfocus="this.style.borderColor='var(--accent-color)'; this.style.boxShadow='0 0 0 3px rgba(13, 148, 136, 0.1)'"
                        onblur="this.style.borderColor='var(--border-color)'; this.style.boxShadow='none'">
             </div>
         </section>
@@ -1097,7 +1094,7 @@
                     parsed.customSites.forEach(site => {
                         // Ensure custom sites have proper structure
                         if (!site.icon) site.icon = "fas fa-globe";
-                        if (!site.iconColor) site.iconColor = "#3b82f6";
+                        if (!site.iconColor) site.iconColor = "#0d9488";
                         site.custom = true;
                         sites.push(site);
                     });
@@ -1152,8 +1149,7 @@
                             <span class="category">${site.category}</span>
                         </div>
                     </div>
-                    <div class="site-card-footer">
-                        <div class="site-url" title="${site.url}">${site.url}</div>
+                    <div class="site-card-actions">
                         <button class="edit-btn" data-index="${index}" title="Edit store">
                             <span class="material-icons-round" style="font-size: 18px;">edit</span>
                         </button>
